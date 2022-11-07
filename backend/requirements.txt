@@ -1,0 +1,19 @@
+# data
+numpy
+pandas
+scikit-learn
+
+# database
+sqlalchemy
+pymysql
+
+# som
+minisom
+sompy
+
+# websocket
+asyncio
+websockets
+
+# misc
+pylint

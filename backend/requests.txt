@@ -1,0 +1,22 @@
+{
+    "type":"database_connect",
+    "options": {
+        "variant": "mysql+pymysql",
+        "host": "uni-muenster.de",
+        "port": "3306",
+        "user": "",
+        "pass": "",
+        "database": "wwu_cache"
+    }
+}
+Change to schema
+
+{
+    "type":"query_data",
+    "query": "SELent;"
+}
+
+{
+    "type":"som_train",
+    "options": ""
+}
