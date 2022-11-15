@@ -6,6 +6,7 @@ import json
 from tasks.area_selection import area_selection
 
 from tasks.database_connect import database_connect
+from tasks.decision_tree_train import decision_tree_train
 from tasks.query_data import query_data
 from tasks.som_mapsize import som_mapsize
 from tasks.som_train import som_train
@@ -27,6 +28,8 @@ async def handler(websocket):
             await som_train(websocket, event["options"])
         if task == "area_selection":
             await area_selection(websocket, event["options"])
+        if task == "decision_tree_train":
+            await decision_tree_train(websocket, event["options"])
 
 
 async def main():

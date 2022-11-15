@@ -2,6 +2,9 @@
 import SqlView from "./sql_editor/SqlView.vue";
 import NavBar from "./NavBar.vue";
 import SOM from "./SOM.vue"
+import MessageBox from "./MessageBox.vue"
+import Output from "./output/Boundaries.vue"
+import { store } from "@/logic/store";
 </script>
 
 <template>
@@ -19,11 +22,16 @@ import SOM from "./SOM.vue"
     </div>
 
     <div class="output">
-      
+      <Output />
     </div>
 
     <div class="footer">Footer</div>
   </div>
+
+  <div class="messages">
+    <MessageBox v-for="msg in store.messages" :body="msg.body" :title="msg.title"/>
+  </div>
+  
 </template>
 
 <style scoped>
@@ -57,7 +65,7 @@ import SOM from "./SOM.vue"
 }
 .output {
   grid-area: right-bottom;
-  padding: 0.7rem;
+  padding: 0.7rem 0 0.7rem 0.7rem;
 }
 .footer {
   grid-area: footer;

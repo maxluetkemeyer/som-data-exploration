@@ -13,8 +13,8 @@ async def som_train(websocket, options):
 
     array = data.values
 
-    n_neurons = 20
-    m_neurons = 20
+    n_neurons = 4
+    m_neurons = 4
 
     som = MiniSom(n_neurons, m_neurons, array.shape[1], sigma=1.5, learning_rate=.5, neighborhood_function='gaussian', random_seed=0)
 
@@ -29,6 +29,10 @@ async def som_train(websocket, options):
             "coordinates": list(key),
             "indices": win_map_dict[key],
         })
+
+    storage.som = {
+        "win_map": win_map_dict,
+    }
 
     response = {
         "type": "som_train",

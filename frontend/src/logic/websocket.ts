@@ -1,5 +1,6 @@
 import { store } from "./store"
 import { database_connect } from "./tasks/database_connect";
+import { decision_tree_train } from "./tasks/decision_tree_train";
 import { query_data } from "./tasks/query_data";
 import { som_train } from "./tasks/som_train";
 
@@ -26,6 +27,9 @@ export const createConnection = () => {
                 return;
             case "som_train":
                 som_train(json["som"])
+                return;
+            case "decision_tree_train":
+                decision_tree_train(json["output"])
                 return;
         }
     }
@@ -58,6 +62,21 @@ export const som_train_send = () => {
     connection.send(JSON.stringify(msg))
 }
 
+export const decision_tree_train_send = () => {
+    const msg = {
+        type:"decision_tree_train",
+        options: {
+            selection: [
+                {
+                    "x": 0,
+                    "y": 0, 
+                }
+            ]
+        }
+    }
+
+    connection.send(JSON.stringify(msg))
+}
 
 /*
 query_data

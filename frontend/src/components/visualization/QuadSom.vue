@@ -13,17 +13,15 @@ import { initQuadSom } from "./quad/som_quad";
 export default {
     data() {
         return {
-            canvasMultiplier: 12,
             somSize: {
-                x: store.som.distance_map[0].length,
-                y: store.som.distance_map.length,
+                width: store.som.distance_map[0].length,
+                height: store.som.distance_map.length,
             }
         }
     },
     computed: {
         canvasSize() {
             const canvasContainer =  document.getElementById("canvasContainer")
-
             const size = canvasContainer!.clientWidth < canvasContainer!.clientHeight ? canvasContainer?.clientWidth : canvasContainer?.clientHeight
 
             return {
