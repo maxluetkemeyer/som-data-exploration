@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { decision_tree_train_send } from '@/logic/websocket';
+import { decision_tree_train_send } from '@/logic/tasks/decision_tree_train';
 
 </script>
 

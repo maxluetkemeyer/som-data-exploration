@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { store } from "../logic/store.js"
-import { database_connect_send } from "../logic/websocket";
+import { store } from "@/logic/store.js"
+import { database_connect_send } from "@/logic/tasks/database_connect"
 </script>
 
 <template>

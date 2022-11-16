@@ -13,14 +13,14 @@ async def som_train(websocket, options):
 
     array = data.values
 
-    n_neurons = 4
-    m_neurons = 4
+    n_neurons = 2
+    m_neurons = 2
 
     som = MiniSom(n_neurons, m_neurons, array.shape[1], sigma=1.5, learning_rate=.5, neighborhood_function='gaussian', random_seed=0)
 
     som.pca_weights_init(array)
 
-    som.train(array, 4000, verbose=True)
+    som.train(array, 8000, verbose=True)
 
     win_map_dict = som.win_map(array, return_indices=True)
     win_map = []

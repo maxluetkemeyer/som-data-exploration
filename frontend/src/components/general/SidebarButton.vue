@@ -4,7 +4,7 @@ import { SidebarButtonState } from '@/logic/models';
 </script>
 
 <template>
-    <div class="sidebarButton" :class="{ sidebarButtonActive: state == SidebarButtonState.Active, sidebarButtonDisabled: state == SidebarButtonState.Disabled }">
+    <div class="sidebarButton" :class="{ sidebarButtonActive: state == SidebarButtonState.Active }">
         {{ content }}
     </div>
 </template>
@@ -35,10 +35,5 @@ export default {
 
 .sidebarButtonActive {
     background-color: aqua;
-}
-
-.sidebarButtonDisabled {
-    cursor: not-allowed;
-    background-color: brown;
 }
 </style>

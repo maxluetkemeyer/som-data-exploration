@@ -19,16 +19,31 @@ export const store = reactive({
   tables: [],
   query: "SELECT sepal_length, sepal_width, petal_length, petal_width FROM iris;",
   data: [],
-  somDataAvailable: false,
   som: {
+    settings: {
+      neurons: {
+        x: 20,
+        y: 20,
+      },
+      sigma: 1,
+      learning_rate: 1,
+      random_seed: 1,
+      neighborhood: "s",
+      topology: "k",
+      activation_distance: "s",
+      decay_function: "d",
+      num_iterations: 1,
+      random_order: false,
+    },
     distance_map: [[]],
     weights: [],
     win_map: [],
   },
   messages: msgArray,
-  boundaries: ""
+  boundaries: "",
 })
 
 export const states = reactive({
+  visualization: ShowState.Settings,
   boundaries: ShowState.Settings,
 })

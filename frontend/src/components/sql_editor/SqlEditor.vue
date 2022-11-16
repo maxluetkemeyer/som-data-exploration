@@ -2,7 +2,7 @@
 import { Codemirror } from "vue-codemirror";
 import { sql } from "@codemirror/lang-sql";
 import { store } from "../../logic/store"
-import { query_data_send } from "@/logic/websocket";
+import { query_data_send } from "@/logic/tasks/query_data";
 </script>
 
 <template>

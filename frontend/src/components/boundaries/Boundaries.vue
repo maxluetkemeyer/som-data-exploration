@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import BoundariesOutput from './BoundariesOutput.vue';
 import BoundariesSettings from "./BoundariesSettings.vue"
-import SidebarButton from "./SidebarButton.vue";
+import SidebarButton from "../general/SidebarButton.vue";
 import { ShowState, SidebarButtonState } from "@/logic/models";
 import { states } from '@/logic/store';
 
@@ -15,12 +15,30 @@ import { states } from '@/logic/store';
             <BoundariesOutput v-else />
         </div>
         <div class="sidebar">
-            <SidebarButton @click="states.boundaries = ShowState.Settings" :state="states.boundaries == ShowState.Settings ? SidebarButtonState.Active : SidebarButtonState.Enabled"
+            <SidebarButton @click="setShowState(ShowState.Settings)"
+                :state="determineState(ShowState.Settings)"
                 content="S" />
-            <SidebarButton @click="states.boundaries = ShowState.Output" :state="states.boundaries == ShowState.Output ? SidebarButtonState.Active : SidebarButtonState.Enabled" content="O" />
+            <SidebarButton @click="setShowState(ShowState.Output)"
+                :state="determineState(ShowState.Output)"
+                content="O" />
         </div>
     </div>
 </template>
+
+<script lang="ts">
+export default {
+    methods: {
+        setShowState(state: ShowState) {
+            states.boundaries = state;
+        },
+        determineState(state: ShowState){
+            if(states.boundaries == state) return SidebarButtonState.Active;
+
+            return SidebarButtonState.Enabled;
+        }
+    }
+}
+</script>
 
 <style scoped>
 .boundaries {

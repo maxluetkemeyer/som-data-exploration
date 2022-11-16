@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import SqlView from "./sql_editor/SqlView.vue";
 import NavBar from "./NavBar.vue";
-import SOM from "./SOM.vue"
+import SOM from "./visualization/SOM.vue"
 import MessageBox from "./MessageBox.vue"
-import Output from "./output/Boundaries.vue"
-import { store } from "@/logic/store";
+import Boundaries from "./boundaries/Boundaries.vue"
+import { states, store } from "@/logic/store";
+import LoadingContainer from "./general/LoadingContainer.vue";
+import { ShowState } from "@/logic/models";
 </script>
 
 <template>
@@ -18,11 +20,15 @@ import { store } from "@/logic/store";
     </div>
 
     <div class="viz">
-      <SOM />
+      <LoadingContainer :isLoading="states.visualization == ShowState.Loading">
+        <SOM />
+      </LoadingContainer>
     </div>
 
     <div class="output">
-      <Output />
+      <LoadingContainer :isLoading="states.boundaries == ShowState.Loading">
+        <Boundaries />
+      </LoadingContainer>
     </div>
 
     <div class="footer">Footer</div>
@@ -61,7 +67,7 @@ import { store } from "@/logic/store";
 }
 .viz {
   grid-area: right-top;
-  padding: 0.7rem;
+  padding: 0.7rem 0 0.7rem 0.7rem;
 }
 .output {
   grid-area: right-bottom;

@@ -10,11 +10,11 @@ export class Message {
 
 export enum ShowState {
     Settings,
-    Output
+    Output,
+    Loading,
 }
 
 export enum SidebarButtonState {
     Active,
     Enabled,
-    Disabled,
 }
