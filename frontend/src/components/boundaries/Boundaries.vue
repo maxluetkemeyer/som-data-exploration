@@ -15,15 +15,15 @@ import { states } from '@/logic/store';
             <BoundariesOutput v-else />
         </div>
         <div class="sidebar">
-            <SidebarButton @click="setShowState(ShowState.Settings)"
-                :state="determineState(ShowState.Settings)"
-                content="S" />
-            <SidebarButton @click="setShowState(ShowState.Output)"
-                :state="determineState(ShowState.Output)"
-                content="O" />
+            <SidebarButton @click="setShowState(ShowState.Settings)" :state="determineState(ShowState.Settings)">
+                <font-awesome-icon icon="fa-solid fa-gear" />
+            </SidebarButton>
+            <SidebarButton @click="setShowState(ShowState.Output)" :state="determineState(ShowState.Output)">
+                <font-awesome-icon icon="fa-solid fa-square-poll-horizontal" />
+            </SidebarButton>
         </div>
     </div>
-</template>
+</template><font-awesome-icon icon="fa-solid fa-gear" />
 
 <script lang="ts">
 export default {
@@ -31,8 +31,8 @@ export default {
         setShowState(state: ShowState) {
             states.boundaries = state;
         },
-        determineState(state: ShowState){
-            if(states.boundaries == state) return SidebarButtonState.Active;
+        determineState(state: ShowState) {
+            if (states.boundaries == state) return SidebarButtonState.Active;
 
             return SidebarButtonState.Enabled;
         }
@@ -44,16 +44,5 @@ export default {
 .boundaries {
     display: flex;
     height: 100%;
-}
-
-.content {
-    width: 100%;
-}
-
-.sidebar {
-    display: flex;
-    flex-direction: column;
-    margin-left: 1rem;
-    row-gap: 0.1rem;
 }
 </style>

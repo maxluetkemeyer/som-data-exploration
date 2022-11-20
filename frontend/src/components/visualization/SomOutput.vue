@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import QuadSom from './QuadSom.vue';
+import HexagonSom from './hexagon/HexagonSom.vue';
 </script>
 
 <template>
     <div class="somOutput">
-        <QuadSom />
+        <HexagonSom />
     </div>
 </template>
 

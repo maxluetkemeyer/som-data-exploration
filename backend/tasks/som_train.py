@@ -7,20 +7,31 @@ import numpy as np
 async def som_train(websocket, options):
     print("som_train task")
 
+    neurons_x = options["neurons"]["x"]
+    neurons_y = options["neurons"]["y"]
+    sigma = options["sigma"]
+    learning_rate = options["learning_rate"]
+    random_seed = options["random_seed"]
+    neighborhood_function = options["neighborhood"]
+    topology = options["topology"]
+    activation_distance = options["activation_distance"]
+    decay_function = options["decay_function"]  # TODO:
+    num_iteration = options["num_iterations"]
+    random_order = options["random_order"]
+
+    print(neurons_x)
+
     data = storage.data.copy()
-
     data = (data - np.mean(data, axis=0)) / np.std(data, axis=0)
-
     array = data.values
 
-    n_neurons = 2
-    m_neurons = 2
-
-    som = MiniSom(n_neurons, m_neurons, array.shape[1], sigma=1.5, learning_rate=.5, neighborhood_function='gaussian', random_seed=0)
+    som = MiniSom(x=neurons_x, y=neurons_y,
+                  input_len=array.shape[1], sigma=sigma, learning_rate=learning_rate, neighborhood_function=neighborhood_function, random_seed=random_seed, topology=topology, activation_distance=activation_distance,)
 
     som.pca_weights_init(array)
 
-    som.train(array, 8000, verbose=True)
+    som.train(data=array, num_iteration=num_iteration,
+              random_order=random_order, verbose=True)
 
     win_map_dict = som.win_map(array, return_indices=True)
     win_map = []

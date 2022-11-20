@@ -5,14 +5,14 @@ import { SidebarButtonState } from '@/logic/models';
 
 <template>
     <div class="sidebarButton" :class="{ sidebarButtonActive: state == SidebarButtonState.Active }">
-        {{ content }}
+        <slot></slot>
     </div>
 </template>
 
 <script lang="ts">
 
 export default {
-    props: ["content", "state"]
+    props: ["state"]
 }
 </script>
 
@@ -23,17 +23,19 @@ export default {
     justify-content: center;
     width: 3rem;
     height: 3rem;
-    background-color: lightgray;
-    color: black;
-    border: 1px solid black;
+    background-color: #D6E4E5;
+    color: #393E46;
+    border-radius: 40% 0 0 40%;
     cursor: pointer;
 }
 
 .sidebarButton:hover {
-    background-color: aqua;
+    background-color: #D6E4E5;
+    color: #EB6440;
 }
 
 .sidebarButtonActive {
-    background-color: aqua;
+    background-color: #EB6440;
+    color: #D6E4E5
 }
 </style>

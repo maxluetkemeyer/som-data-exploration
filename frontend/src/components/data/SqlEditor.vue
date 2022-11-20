@@ -6,14 +6,15 @@ import { query_data_send } from "@/logic/tasks/query_data";
 </script>
 
 <template>
-  <div class="wrapper-sqleditor">
-    <div class="sqleditor-code">
-      <codemirror v-model="store.query" :extensions="extensions" placeholder="Type SQL here" :style="{ height: '100%' }" />
+  <div class="sqlEditor">
+    <div class="sqlEditor-code">
+      <codemirror v-model="store.query" :extensions="extensions" placeholder="Type SQL here"
+        :style="{ height: '100%' }" />
     </div>
 
-    <div class="sqleditor-menu">
+    <div class="sqlEditor-menu">
       <button @click="query_data_send();" class="btn btn-primary">Query</button>
-      <button class="btn btn-secondary">Button 2</button>
+      <!-- <button class="btn btn-secondary">Button 2</button> -->
     </div>
   </div>
 </template>
@@ -31,19 +32,21 @@ export default {
 </script>
 
 <style scoped>
-.wrapper-sqleditor {
+.sqlEditor {
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
 }
-.sqleditor-code {
+
+.sqlEditor-code {
   width: 100%;
   height: 100%;
-  border: 1px solid rgb(230,230,230)
+  border: 1px solid rgb(230, 230, 230)
 }
-.sqleditor-menu {
+
+.sqlEditor-menu {
   margin-top: 1rem;
   display: flex;
   gap: 1rem;

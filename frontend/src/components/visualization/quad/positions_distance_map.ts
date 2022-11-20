@@ -8,8 +8,8 @@ export const calcDistanceMapPositions = (somSize: any, quadSize: any, distance_m
             const color = distance_map[y][x] * -255 + 255
 
             rects.push(new MyRect(
-                new MyPoint(x*quadSize.x, y*quadSize.y),
-                new MyPoint((x+1)*quadSize.x, (y+1)*quadSize.y),
+                new MyPoint(x*quadSize, y*quadSize),
+                new MyPoint((x+1)*quadSize, (y+1)*quadSize),
                 color,
             ))
         }

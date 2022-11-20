@@ -8,11 +8,11 @@ import { calcWinMapPositions } from "./positions_win_map";
 let sketchInstance;
 
 export const initQuadSom = (som: any, somSize: any, canvasSize: any) => {
-    const quadSize = {
-        x: canvasSize.width / somSize.width,
-        y: canvasSize.height / somSize.height,
-    }
-    const circle_size = canvasSize.width * 0.015;
+    const qsw = canvasSize.width / somSize.width;
+    const qsh = canvasSize.height / somSize.height;
+
+    const quadSize = Math.min(qsw, qsh)
+    const circle_size = quadSize * 0.2;
 
     const distance_map_positions = calcDistanceMapPositions(somSize, quadSize, som.distance_map);
     const win_map_positions = calcWinMapPositions(som.win_map, quadSize, circle_size);
@@ -22,7 +22,7 @@ export const initQuadSom = (som: any, somSize: any, canvasSize: any) => {
             const canvas = s.createCanvas(canvasSize.width, canvasSize.height)
             canvas.parent("canvasContainer")
 
-            s.background("blue")
+            //s.background("blue")
         }
 
         s.draw = () => {

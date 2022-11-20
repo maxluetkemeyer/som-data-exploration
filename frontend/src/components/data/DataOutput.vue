@@ -5,11 +5,9 @@ import { store } from '@/logic/store';
 </script>
 
 <template>
-  <div class="wrapper-sqltable">
+  <div class="dataOutput">
     <p v-if="store.data.length == 0">No data available</p>
-    <div v-else class="table-responsive"> <!--funktioniert das?-->
-      <table class="table table-hover">
-        <!--table-bordered-->
+      <table v-else class="table table-sm table-hover table-striped table-bordered">
         <thead class="table-light">
           <tr>
             <th v-for="key of Object.keys(store.data[0])" scope="col">{{ key }}</th>
@@ -21,7 +19,6 @@ import { store } from '@/logic/store';
           </tr>
         </tbody>
       </table>
-    </div>
   </div>
 </template>
 
@@ -34,10 +31,9 @@ export default {
 </script>
 
 <style scope>
-.wrapper-sqltable {
+.dataOutput {
   width: 100%;
   height: 100%;
-  max-height: 100%;
   overflow: auto;
 }
 </style>

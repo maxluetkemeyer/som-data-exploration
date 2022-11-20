@@ -1,14 +1,12 @@
 <script lang="ts" setup>
 import { store } from "@/logic/store";
 import { onUpdated } from "vue";
-import { initQuadSom } from "./quad/som_quad";
+import { initHexagonSom } from "./som_hexagon";
 </script>
 
 <template>
-    <div class="quadSom">
-        <div id="canvasContainer" class="canvasContainer">
-
-        </div>
+    <div class="hexagonSom">
+        <div id="canvasContainer" class="canvasContainer"> </div>
     </div>
 </template>
 
@@ -17,34 +15,34 @@ export default {
     data() {
         return {
             somSize: {
-                width: store.som.distance_map[0].length,
-                height: store.som.distance_map.length,
+                width: store.som.result.distance_map[0].length,
+                height: store.som.result.distance_map.length,
             }
         }
     },
     computed: {
         canvasSize() {
             const canvasContainer = document.getElementById("canvasContainer")
-            const size = canvasContainer!.clientWidth < canvasContainer!.clientHeight ? canvasContainer?.clientWidth : canvasContainer?.clientHeight
 
             return {
-                width: size,
-                height: size,
+                width: canvasContainer!.clientWidth,
+                height: canvasContainer!.clientHeight,
             }
         }
     },
     mounted() {
         console.log("mounted")
-        initQuadSom(store.som, this.somSize, this.canvasSize);
+        initHexagonSom(store.som.result, this.somSize, this.canvasSize);
     },
 }
 </script>
 
 <style scoped>
-.quadSom {
+.hexagonSom {
     width: 100%;
     height: 100%;
 }
+
 .canvasContainer {
     height: 100%;
     width: 100%;
