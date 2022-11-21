@@ -27,7 +27,7 @@ export const initQuadSom = (som: any, somSize: any, canvasSize: any) => {
 
         s.draw = () => {
             drawDistanceMap(s, distance_map_positions);
-            drawWinMap(s, win_map_positions, circle_size);
+            drawWinMap(s, win_map_positions);
             drawMouseSelection(s, distance_map_positions);
         }
     }

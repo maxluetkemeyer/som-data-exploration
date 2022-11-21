@@ -30,12 +30,14 @@ import { store } from "@/logic/store"
             <span class="input-group-text">Neighborhood</span>
             <select v-model="store.som.settings.neighborhood" class="form-select form-select-sm">
                 <option selected>gaussian</option>
-                <option>Todo</option>
+                <option>mexican_hat</option>
+                <option>bubble</option>
+                <option>triangle</option>
             </select>
             <span class="input-group-text">Topology</span>
             <select v-model="store.som.settings.topology" class="form-select form-select-sm">
                 <option selected>rectangular</option>
-                <option>Todo</option>
+                <option>hexagonal</option>
             </select>
         </div>
 
@@ -43,7 +45,9 @@ import { store } from "@/logic/store"
             <span class="input-group-text">Activation Distance</span>
             <select v-model="store.som.settings.activation_distance" class="form-select form-select-sm">
                 <option selected>euclidean</option>
-                <option>Todo</option>
+                <option>cosine</option>
+                <option>manhattan</option>
+                <option>chebyshev</option>
             </select>
             <span class="input-group-text">Decay Function</span>
             <select v-model="store.som.settings.decay_function" class="form-select form-select-sm">

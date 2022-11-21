@@ -13,18 +13,17 @@ export const calcWinMapPositions = (win_map: any, quadSize: any, circle_size: an
         const xCenter = x * quadSize + quadSize / 2
         const yCenter = y * quadSize + quadSize / 2
 
-        const xOffset = (quadSize / 2 - circle_size) * (Math.random() * 2 - 1)
-        const yOffset = (quadSize / 2 - circle_size) * (Math.random() * 2 - 1)
+        for (const idx of neuron.indices) {
+            const xOffset = (quadSize / 2 - circle_size) * (Math.random() * 2 - 1)
+            const yOffset = (quadSize / 2 - circle_size) * (Math.random() * 2 - 1)
 
-        const posX = xCenter + xOffset, posY = yCenter + yOffset
+            const posX = xCenter + xOffset, posY = yCenter + yOffset
 
-        /*win_map_circles.push({
-            x: posX,
-            y: posY,
-            color: "lightgreen"
-        })*/
-        win_map_circles.push(new MyCircle(posX, posY, 1))
+            win_map_circles.push(new MyCircle(posX, posY, circle_size))
+        }
     }
+
+    console.log(win_map_circles.length)
 
     return win_map_circles;
 }

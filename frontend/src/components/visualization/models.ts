@@ -10,6 +10,15 @@ export class MyPoint {
     }
 }
 
+export class MyCircle extends MyPoint{
+    r: number;
+
+    constructor(x: number, y: number, r:number){
+        super(x, y);
+        this.r = r
+    }
+}
+
 export class MyRect {
     tl: MyPoint;
     br: MyPoint;
@@ -44,11 +53,12 @@ export class MyRect {
     }
 }
 
-export class MyCircle extends MyPoint{
-    r: number;
+export class MyHexagon {
+    center: MyPoint;
+    color?: any;
 
-    constructor(x: number, y: number, r:number){
-        super(x, y);
-        this.r = r
+    constructor(center: MyPoint, color?: any){
+        this.center = center;
+        this.color = color;
     }
 }

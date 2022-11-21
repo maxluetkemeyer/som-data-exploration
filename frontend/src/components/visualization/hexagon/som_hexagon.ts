@@ -1,29 +1,34 @@
 import p5 from "p5";
 import { drawDistanceMap } from "./draw_distance_map";
-//import { calcDistanceMapPositions } from "./positions_distance_map";
+import { drawWinMap } from "./draw_win_map";
+import { calcDistanceMapPositions } from "./positions_distance_map";
+import { calcWinMapPositions } from "./positions_win_map";
 
 let sketchInstance;
 
 export const initHexagonSom = (som: any, somSize: any, canvasSize: any) => {
-    const qsw = canvasSize.width / somSize.width;
-    const qsh = canvasSize.height / somSize.height;
-    const quadSize = Math.min(qsw, qsh)
-    const r = quadSize/2
+    const a = 2 * Math.PI / 6;
+    const r_width = canvasSize.width / (1 + somSize.width + somSize.width * Math.cos(a) - Math.cos(a))
+    const r_height = canvasSize.height / (Math.sin(a) * (1+somSize.height*2))
+    const r = Math.min(r_width, r_height);
 
-    //const distance_map_positions = calcDistanceMapPositions(somSize, quadSize, som.distance_map);
+    const circle_size = r * 0.3;
+
+
+    const distance_map_positions = calcDistanceMapPositions(somSize, som.distance_map, a, r);
+    const win_map_positions = calcWinMapPositions(som.win_map, a, r, circle_size)
 
     const sketch = (s: p5) => {
         s.setup = () => {
             const canvas = s.createCanvas(canvasSize.width, canvasSize.height)
             canvas.parent("canvasContainer")
 
-            s.background("blue")
+            s.frameRate(5) //TODO: Reduce framerate or delete?
         }
 
         s.draw = () => {
-            const distance_map_positions: any[] = [];
-            drawDistanceMap(s, distance_map_positions, canvasSize);
-            //drawWinMap(s, win_map_positions, circle_size);
+            drawDistanceMap(s, distance_map_positions, a, r);
+            drawWinMap(s, win_map_positions, circle_size);
             //drawMouseSelection(s, distance_map_positions);
         }
     }
