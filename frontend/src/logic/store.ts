@@ -3,7 +3,7 @@ import { reactive } from 'vue'
 import { Message, ShowState } from './models'
 
 const msgArray: Message[] = [
-  new Message("Titel Nachricht", "Body Nachricht")
+  new Message(0, "Titel Nachricht", "Body Nachricht")
 ];
 
 export const store = reactive({

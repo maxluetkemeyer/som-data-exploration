@@ -12,7 +12,7 @@ import MessageBox from "./components/general/MessageBox.vue"
   <Connection v-else />
 
   <div class="messages">
-    <MessageBox v-for="msg in store.messages" :body="msg.body" :title="msg.title"/>
+    <MessageBox v-for="msg in store.messages" :id="msg.id" :myId="msg.id" :body="msg.body" :title="msg.title"/>
   </div>
 </template>
 
@@ -24,3 +24,17 @@ export default {
   },
 };
 </script>
+
+<style>
+.messages {
+  position: absolute;
+  right: 0;
+  bottom: 1rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  flex-direction: column-reverse;
+  row-gap: 1rem;
+  z-index: 999;
+}
+</style>

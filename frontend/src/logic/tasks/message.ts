@@ -1,8 +1,11 @@
 import { Message, ShowState } from "../models"
 import { store, states} from "../store"
 
+let lastId = 0
+
 export const message = (options: {title: string, body: string}) => {
-    const msg = new Message(options.title, options.body);
+    lastId++;
+    const msg = new Message(lastId, options.title, options.body);
     store.messages.push(msg)
 
     switch (options.title) {

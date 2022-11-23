@@ -4,7 +4,7 @@
             <h4>{{ title }}</h4>
             <p>{{ body }}</p>
         </div>
-        <div class="messageClose">
+        <div class="messageClose" @click="close()">
             <font-awesome-icon icon="fa-solid fa-circle-xmark"/>
         </div>
     </div>
@@ -12,13 +12,13 @@
 
 <script lang="ts">
 export default {
-    props: ["title", "body"],
+    props: ["myId", "title", "body"],
     async mounted() {
         await new Promise(resolve => setTimeout(resolve, 5000));
     },
     methods: {
         close(){
-            
+            document.getElementById(this.myId)?.remove()
         }
     }
 }
@@ -32,10 +32,7 @@ h4 {
 .messageBox {
     background-color: #D6E4E5;
     color: black;
-    position: absolute;
-    right: 0;
-    bottom: 1rem;
-    z-index: 999;
+    max-width: 60vw;
     border-radius: 10px 0 0 10px;
     display: flex;
 }
