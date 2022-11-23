@@ -35,7 +35,7 @@ h4 {
     position: absolute;
     right: 0;
     bottom: 1rem;
-    z-index: 100;
+    z-index: 999;
     border-radius: 10px 0 0 10px;
     display: flex;
 }

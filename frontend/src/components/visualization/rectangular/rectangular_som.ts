@@ -7,7 +7,8 @@ import { calcWinMapPositions } from "./positions_win_map";
 
 let sketchInstance;
 
-export const initQuadSom = (som: any, somSize: any, canvasSize: any) => {
+//TODO: Square or rectangular
+export const initRectangularSom = (som: any, somSize: any, canvasSize: any) => {
     const qsw = canvasSize.width / somSize.width;
     const qsh = canvasSize.height / somSize.height;
 

@@ -5,6 +5,6 @@ import { decision_tree_train_send } from '@/logic/tasks/decision_tree_train';
 
 <template>
     <div>
-        <button @click="decision_tree_train_send();" class="btn btn-primary">Decision Tree</button>
+        <button @click="decision_tree_train_send();" class="btn btn-primary">Calculate boundaries</button>
     </div>
 </template>

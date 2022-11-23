@@ -1,7 +1,6 @@
-import { ShowState } from "./models";
-import { states, store } from "./store"
 import { database_connect } from "./tasks/database_connect";
 import { decision_tree_train } from "./tasks/decision_tree_train";
+import { message } from "./tasks/message";
 import { query_data } from "./tasks/query_data";
 import { som_train } from "./tasks/som_train";
 
@@ -32,6 +31,8 @@ export const createConnection = () => {
             case "decision_tree_train":
                 decision_tree_train(json["output"])
                 return;
+            default:
+                message(json["options"]);
         }
     }
 }

@@ -18,18 +18,37 @@ async def handler(websocket):
 
         task = event["type"]
 
-        if task == "database_connect":
-            await database_connect(websocket, event["options"])
-        if task == "query_data":
-            await query_data(websocket, event["query"])
-        if task == "som_mapsize":
-            await som_mapsize(websocket, event["lattice"])
-        if task == "som_train":
-            await som_train(websocket, event["options"])
-        if task == "area_selection":
-            await area_selection(websocket, event["options"])
-        if task == "decision_tree_train":
-            await decision_tree_train(websocket, event["options"])
+        try:
+            if task == "database_connect":
+                await database_connect(websocket, event["options"])
+            if task == "query_data":
+                await query_data(websocket, event["query"])
+            if task == "som_mapsize":
+                await som_mapsize(websocket, event["lattice"])
+            if task == "som_train":
+                await som_train(websocket, event["options"])
+            if task == "area_selection":
+                await area_selection(websocket, event["options"])
+            if task == "decision_tree_train":
+                await decision_tree_train(websocket, event["options"])
+
+        except Exception as e:
+            print(e)
+            await send_message(websocket, task, str(e))
+
+
+async def send_message(websocket, title, body):
+    print("message task")
+
+    response = {
+        "type": "message",
+        "options": {
+            "title": title,
+            "body": body,
+        }
+    }
+
+    await websocket.send(json.dumps(response))
 
 
 async def main():

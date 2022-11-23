@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import NavBar from "./NavBar.vue";
 import SOM from "./visualization/SOM.vue"
-import MessageBox from "./general/MessageBox.vue"
 import Boundaries from "./boundaries/Boundaries.vue"
-import { states, store } from "@/logic/store";
+import { states } from "@/logic/store";
 import LoadingContainer from "./general/LoadingContainer.vue";
 import { ShowState } from "@/logic/models";
 import Data from "./data/Data.vue";
@@ -38,11 +37,6 @@ import Footer from "./Footer.vue";
       <Footer />
     </div>
   </div>
-
-  <div class="messages">
-    <MessageBox v-for="msg in store.messages" :body="msg.body" :title="msg.title"/>
-  </div>
-  
 </template>
 
 <style scoped>
