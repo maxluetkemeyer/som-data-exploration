@@ -1,6 +1,6 @@
 import { database_connect } from "./tasks/database_connect";
 import { decision_tree_train } from "./tasks/decision_tree_train";
-import { message } from "./tasks/message";
+import { createMessage, message } from "./tasks/message";
 import { query_data } from "./tasks/query_data";
 import { som_train } from "./tasks/som_train";
 
@@ -12,6 +12,17 @@ export const createConnection = () => {
     connection.onopen = (event) => {
         console.log(event)
         console.log("Successfully connected to Websocket Server")
+        createMessage("Websocket", "Successfully connected to Websocket Server")
+    }
+
+    connection.onclose = (event) => {
+        console.log(event)
+        createMessage("Websocket Close", connection.url)
+        createMessage("Websocket Close", "Start Websocket and reload page")
+    }
+
+    connection.onerror = (event) => {
+        console.log(event)
     }
 
     connection.onmessage = (event) => {

@@ -8,20 +8,21 @@ import { calcWinMapPositions } from "./positions_win_map";
 let sketchInstance;
 
 //TODO: Square or rectangular
-export const initRectangularSom = (som: any, somSize: any, canvasSize: any) => {
+export const initRectangularSom = (som: any, map: any, somSize: any, canvasSize: any, parentId: string) => {
     const qsw = canvasSize.width / somSize.width;
     const qsh = canvasSize.height / somSize.height;
 
     const quadSize = Math.min(qsw, qsh)
     const circle_size = quadSize * 0.2;
 
-    const distance_map_positions = calcDistanceMapPositions(somSize, quadSize, som.distance_map);
+    const distance_map_positions = calcDistanceMapPositions(somSize, quadSize, map);
     const win_map_positions = calcWinMapPositions(som.win_map, quadSize, circle_size);
 
     const sketch = (s: p5) => {
         s.setup = () => {
-            const canvas = s.createCanvas(canvasSize.width, canvasSize.height)
-            canvas.parent("canvasContainer")
+            //const canvas = s.createCanvas(canvasSize.width, canvasSize.height)
+            const canvas = s.createCanvas(somSize.width * quadSize, somSize.height * quadSize)
+            canvas.parent(parentId)
 
             //s.background("blue")
         }

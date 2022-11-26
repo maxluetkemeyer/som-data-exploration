@@ -7,9 +7,9 @@ import "bootstrap/dist/js/bootstrap.js";
 import "bootstrap/dist/css/bootstrap.css";
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faGear, faSquarePollHorizontal, faTableCells, faDatabase, faTableList, faCircleXmark} from '@fortawesome/free-solid-svg-icons'
+import { faGear, faSquarePollHorizontal, faTableCells, faDatabase, faTableList, faCircleXmark, faUpRightAndDownLeftFromCenter, faDownLeftAndUpRightToCenter, faLayerGroup} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-library.add(faGear, faSquarePollHorizontal, faTableCells, faDatabase, faTableList, faCircleXmark)
+library.add(faGear, faSquarePollHorizontal, faTableCells, faDatabase, faTableList, faCircleXmark, faUpRightAndDownLeftFromCenter, faDownLeftAndUpRightToCenter, faLayerGroup)
 
 const app = createApp(App)
 

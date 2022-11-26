@@ -6,7 +6,7 @@ import { calcWinMapPositions } from "./positions_win_map";
 
 let sketchInstance;
 
-export const initHexagonSom = (som: any, somSize: any, canvasSize: any) => {
+export const initHexagonSom = (som: any, map: any, somSize: any, canvasSize: any, parentId: string) => {
     const a = 2 * Math.PI / 6;
     const r_width = canvasSize.width / (1 + somSize.width + somSize.width * Math.cos(a) - Math.cos(a))
     const r_height = canvasSize.height / (Math.sin(a) * (1+somSize.height*2))
@@ -15,13 +15,14 @@ export const initHexagonSom = (som: any, somSize: any, canvasSize: any) => {
     const circle_size = r * 0.3;
 
 
-    const distance_map_positions = calcDistanceMapPositions(somSize, som.distance_map, a, r);
+    const distance_map_positions = calcDistanceMapPositions(somSize, map, a, r);
     const win_map_positions = calcWinMapPositions(som.win_map, a, r, circle_size)
 
     const sketch = (s: p5) => {
         s.setup = () => {
             const canvas = s.createCanvas(canvasSize.width, canvasSize.height)
-            canvas.parent("canvasContainer")
+            //const canvas = s.createCanvas(somSize.width * 2 * r, canvasSize.height)
+            canvas.parent(parentId)
 
             s.frameRate(5) //TODO: Reduce framerate or delete?
         }

@@ -31,9 +31,9 @@ export default {
     },
     mounted() {
         if(store.som.settings.topology === "rectangular"){
-            initRectangularSom(store.som.result, this.somSize, this.canvasSize);
+            initRectangularSom(store.som.result, store.som.result.distance_map, this.somSize, this.canvasSize, "canvasContainer");
         }else {
-            initHexagonSom(store.som.result, this.somSize, this.canvasSize);
+            initHexagonSom(store.som.result, store.som.result.distance_map, this.somSize, this.canvasSize, "canvasContainer");
         }
         
     },
@@ -51,5 +51,6 @@ export default {
     width: 100%;
     display: flex;
     justify-content: center;
+    /* align-items: center; */
 }
 </style>

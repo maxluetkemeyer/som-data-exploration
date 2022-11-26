@@ -2,9 +2,7 @@
 import { reactive } from 'vue'
 import { Message, ShowState } from './models'
 
-const msgArray: Message[] = [
-  new Message(0, "Titel Nachricht", "Body Nachricht")
-];
+const msgArray: Message[] = [];
 
 export const store = reactive({
   connected: false,
@@ -37,7 +35,7 @@ export const store = reactive({
     },
     result: {
       distance_map: [[]],
-      weights: [],
+      weights: [[[]]],
       win_map: [],
     }
   },
@@ -49,4 +47,5 @@ export const states = reactive({
   data: ShowState.Settings,
   visualization: ShowState.Settings,
   boundaries: ShowState.Settings,
+  fullscreen: ShowState.Settings,
 })

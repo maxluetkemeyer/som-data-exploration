@@ -2,6 +2,7 @@ import json
 from minisom import MiniSom
 import storage
 import numpy as np
+from sklearn.preprocessing import normalize
 
 
 async def som_train(websocket, options):
@@ -45,12 +46,19 @@ async def som_train(websocket, options):
         "win_map": win_map_dict,
     }
 
+    weights_list = []
+    W = som.get_weights()
+    for i in range(len(W[0][0])):
+        w = W[:, :, i]
+        normalized_w = normalize(w, axis=1)
+        weights_list.append(normalized_w)
+
     response = {
         "type": "som_train",
         "som": {
             "distance_map": som.distance_map().tolist(),
             "win_map": win_map,
-            "weights": som.get_weights().tolist(),
+            "weights": weights_list,
         }
     }
 
