@@ -20,7 +20,7 @@ import { states } from '@/logic/store';
 export default {
     methods: {
         close(){
-            states.fullscreen = ShowState.Settings;
+            states.visualization = ShowState.Output;
         }
     }
 }

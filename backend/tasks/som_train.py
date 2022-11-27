@@ -2,7 +2,7 @@ import json
 from minisom import MiniSom
 import storage
 import numpy as np
-from sklearn.preprocessing import normalize
+from sklearn.preprocessing import normalize, MinMaxScaler
 
 
 async def som_train(websocket, options):
@@ -26,6 +26,8 @@ async def som_train(websocket, options):
     data = (data - np.mean(data, axis=0)) / np.std(data, axis=0)
     array = data.values
 
+    print(len(array))
+
     som = MiniSom(x=neurons_x, y=neurons_y,
                   input_len=array.shape[1], sigma=sigma, learning_rate=learning_rate, neighborhood_function=neighborhood_function, random_seed=random_seed, topology=topology, activation_distance=activation_distance,)
 
@@ -46,12 +48,17 @@ async def som_train(websocket, options):
         "win_map": win_map_dict,
     }
 
+    min_max_scaler = MinMaxScaler()
+
     weights_list = []
     W = som.get_weights()
     for i in range(len(W[0][0])):
         w = W[:, :, i]
-        normalized_w = normalize(w, axis=1)
-        weights_list.append(normalized_w)
+
+        # normalized_w = normalize(w, axis=1)
+        scaled = min_max_scaler.fit_transform(w)
+
+        weights_list.append(scaled)
 
     response = {
         "type": "som_train",

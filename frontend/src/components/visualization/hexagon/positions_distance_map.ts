@@ -1,5 +1,8 @@
 // https://eperezcosano.github.io/hex-grid/
 import { MyHexagon, MyPoint } from "../models";
+import chroma from "chroma-js";
+
+const myScale = chroma.scale(["red", "blue"]).mode("lab")
 
 export const calcDistanceMapPositions = (somSize: any, map: any, a: number, r: number): MyHexagon[] => {
     const hexs: MyHexagon[] = [];
@@ -9,7 +12,9 @@ export const calcDistanceMapPositions = (somSize: any, map: any, a: number, r: n
         let y_row = (r*Math.sin(a)) + n_y * 2 * r * Math.sin(a)
 
         for (let n_x = 0; n_x < somSize.width; n_x++) {
-            const color = map[n_y][n_x] * -255 + 255
+            let num: number = map[n_y][n_x];
+            const color = myScale(num).hex();
+
             let y = y_row + (n_x % 2) * r * Math.sin(a);
             let x = r + n_x * r * (1 + Math.cos(a));
 

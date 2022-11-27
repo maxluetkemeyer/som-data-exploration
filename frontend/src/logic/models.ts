@@ -14,6 +14,8 @@ export enum ShowState {
     Settings,
     Output,
     Loading,
+    Fullscreen,
+    FullscreenWeightMaps,
 }
 
 export enum SidebarButtonState {

@@ -16,7 +16,7 @@ async def query_data(websocket, query):
 
     storage.data = df
 
-    data = df.to_dict("records")
+    data = df.head(100).to_dict("records")
 
     response = {
         "type": "query_data",

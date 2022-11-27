@@ -14,6 +14,8 @@ async def decision_tree_train(websocket, options):
     dtqbe = DecisionTreeQBE(storage.data, target_list)
     output = dtqbe.search_best_predicate()
 
+    print("finished decision tree")
+
     response = {
         "type": "decision_tree_train",
         "output": output

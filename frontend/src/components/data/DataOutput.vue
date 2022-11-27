@@ -1,7 +1,5 @@
 <script lang="ts" setup>
 import { store } from '@/logic/store';
-
-
 </script>
 
 <template>

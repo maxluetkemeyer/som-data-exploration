@@ -4,20 +4,23 @@ import SomOutput from "./SomOutput.vue";
 import SomSettings from "./SomSettings.vue";
 import { SidebarButtonState, ShowState } from "@/logic/models";
 import SidebarButton from "../general/SidebarButton.vue";
-import SomFullScreen from "../general/FullScreen.vue";
+import SomFullScreen from "./FullScreen.vue";
 import SomWeightMaps from "./SomWeightMaps.vue"
 </script>
 
 <template>
     <div class="som">
-        <SomFullScreen v-if="states.fullscreen == ShowState.Output">
-            <SomOutput v-if="fullScreenContent === 'som'"/>
-            <SomWeightMaps v-else />
+        <SomFullScreen v-if="states.visualization == ShowState.Fullscreen">
+            <SomOutput />
+        </SomFullScreen>
+
+        <SomFullScreen v-if="states.visualization == ShowState.FullscreenWeightMaps">
+            <SomWeightMaps />
         </SomFullScreen>
 
         <div class="content">
             <SomSettings v-if="states.visualization == ShowState.Settings" />
-            <SomOutput v-else />
+            <SomOutput v-if="states.visualization == ShowState.Output" />
         </div>
         <div class="sidebar">
             <SidebarButton @click="setShowState(ShowState.Settings)" :state="determineState(ShowState.Settings)">
@@ -26,10 +29,10 @@ import SomWeightMaps from "./SomWeightMaps.vue"
             <SidebarButton @click="setShowState(ShowState.Output)" :state="determineState(ShowState.Output)">
                 <font-awesome-icon icon="fa-solid fa-table-cells" />
             </SidebarButton>
-            <SidebarButton @click="openFullScreen('som')" :state="SidebarButtonState.Enabled">
+            <SidebarButton @click="setShowState(ShowState.Fullscreen)" :state="determineState(ShowState.Fullscreen)">
                 <font-awesome-icon icon="fa-solid fa-up-right-and-down-left-from-center" />
             </SidebarButton>
-            <SidebarButton @click="openFullScreen('weight_maps')" :state="SidebarButtonState.Enabled">
+            <SidebarButton @click="setShowState(ShowState.FullscreenWeightMaps)" :state="determineState(ShowState.FullscreenWeightMaps)">
                 <font-awesome-icon icon="fa-solid fa-layer-group" />
             </SidebarButton>
 
@@ -39,11 +42,6 @@ import SomWeightMaps from "./SomWeightMaps.vue"
 
 <script lang="ts">
 export default {
-    data() {
-        return {
-            fullScreenContent: "som", //weight_maps
-        }
-    },
     methods: {
         setShowState(state: ShowState) {
             states.visualization = state;
@@ -53,10 +51,6 @@ export default {
                 return SidebarButtonState.Active;
             return SidebarButtonState.Enabled;
         },
-        openFullScreen(content: string){
-            this.fullScreenContent = content;
-            states.fullscreen = ShowState.Output
-        }
     },
     components: { SomFullScreen }
 }
