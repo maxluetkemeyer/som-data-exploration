@@ -3,15 +3,18 @@ import numpy as np
 import storage
 
 
-# lattice 'rect' or 'hex'
+# :lattice: 'rectangular' or 'hexagonal'
 async def som_mapsize(websocket, lattice):
     print("som_mapsize task")
 
-    map_sizes = calculate_map_size(storage.data_matrix, lattice)
+    print(lattice)
+    array = storage.data.values
+
+    map_size = calculate_map_size(array, lattice)
 
     response = {
         "type": "som_mapsize",
-        "map_sizes": map_sizes
+        "map_size": map_size
     }
 
     await websocket.send(json.dumps(response))
@@ -23,7 +26,7 @@ def calculate_map_size(data, lattice):
     """
     Calculates the optimal map size given a dataset using eigenvalues and
     eigenvectors. Matlab ported
-    :lattice: 'rect' or 'hex'
+    :lattice: 'rectangular' or 'hexagonal'
     :return: map sizes
     """
     D = data.copy()
@@ -49,11 +52,14 @@ def calculate_map_size(data, lattice):
     else:
         ratio = np.sqrt(eigval[-1] / eigval[-2])
 
-    if lattice == "rect":
+    if lattice == "rectangular":
         size1 = min(munits, round(np.sqrt(munits / ratio)))
     else:
         size1 = min(munits, round(np.sqrt(munits / ratio * np.sqrt(0.75))))
 
     size2 = round(munits / size1)
 
-    return [int(size1), int(size2)]
+    return {
+        "y": int(size1),
+        "x": int(size2)
+    }

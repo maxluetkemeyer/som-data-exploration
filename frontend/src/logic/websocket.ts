@@ -2,6 +2,7 @@ import { database_connect } from "./tasks/database_connect";
 import { decision_tree_train } from "./tasks/decision_tree_train";
 import { createMessage, message } from "./tasks/message";
 import { query_data } from "./tasks/query_data";
+import { som_mapsize } from "./tasks/som_mapsize";
 import { som_train } from "./tasks/som_train";
 
 export let connection: WebSocket;
@@ -42,6 +43,8 @@ export const createConnection = () => {
             case "decision_tree_train":
                 decision_tree_train(json["output"])
                 return;
+            case "som_mapsize":
+                som_mapsize(json["map_size"])
             default:
                 message(json["options"]);
         }

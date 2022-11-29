@@ -40,8 +40,8 @@ import RectSom from './rectangular/RectSom.vue';
 }
 
 .canvasContainer {
-    width: 30rem;
-    height: 30rem;
+    width: 20rem;
+    height: 20rem;
     display: flex;
     justify-content: center;
     border: 1px solid black;

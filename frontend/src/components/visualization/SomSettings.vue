@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { som_train_send } from "@/logic/tasks/som_train";
 import { store } from "@/logic/store"
+import { som_mapsize_send } from "@/logic/tasks/som_mapsize";
 </script>
 
 <template>
@@ -12,6 +13,8 @@ import { store } from "@/logic/store"
             <span class="input-group-text">Y-Neurons</span>
             <input v-model="store.som.settings.neurons.y" type="number" class="form-control" placeholder="Y-Neurons"
                 aria-label="Y-Neurons">
+
+            <button @click="som_mapsize_send()" class="btn btn-primary">Approximate</button>
         </div>
 
         <div class="input-group mb-3">
