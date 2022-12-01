@@ -4,35 +4,43 @@ import SomOutput from "./SomOutput.vue";
 import SomSettings from "./SomSettings.vue";
 import { SidebarButtonState, ShowState } from "@/logic/models";
 import SidebarButton from "../general/SidebarButton.vue";
-import SomFullScreen from "./FullScreen.vue";
+import FullScreen from "../general/FullScreen.vue";
 import SomWeightMaps from "./SomWeightMaps.vue"
 </script>
 
 <template>
     <div class="som">
-        <SomFullScreen v-if="states.visualization == ShowState.Fullscreen">
+        <FullScreen v-if="states.visualization == ShowState.Fullscreen"
+            :closeFct="() => { states.visualization = ShowState.Output; }">
             <SomOutput />
-        </SomFullScreen>
+        </FullScreen>
 
-        <SomFullScreen v-if="states.visualization == ShowState.FullscreenWeightMaps">
+        <FullScreen
+            v-if="states.visualization == ShowState.FullscreenWeightMaps"
+            :closeFct="() => { states.visualization = ShowState.Output; }">
             <SomWeightMaps />
-        </SomFullScreen>
+        </FullScreen>
 
         <div class="content">
             <SomSettings v-if="states.visualization == ShowState.Settings" />
             <SomOutput v-if="states.visualization == ShowState.Output" />
         </div>
         <div class="sidebar">
-            <SidebarButton @click="setShowState(ShowState.Settings)" :state="determineState(ShowState.Settings)">
+            <SidebarButton @click="setShowState(ShowState.Settings)"
+                :state="determineState(ShowState.Settings)">
                 <font-awesome-icon icon="fa-solid fa-gear" />
             </SidebarButton>
-            <SidebarButton @click="setShowState(ShowState.Output)" :state="determineState(ShowState.Output)">
+            <SidebarButton @click="setShowState(ShowState.Output)"
+                :state="determineState(ShowState.Output)">
                 <font-awesome-icon icon="fa-solid fa-table-cells" />
             </SidebarButton>
-            <SidebarButton @click="setShowState(ShowState.Fullscreen)" :state="determineState(ShowState.Fullscreen)">
-                <font-awesome-icon icon="fa-solid fa-up-right-and-down-left-from-center" />
+            <SidebarButton @click="setShowState(ShowState.Fullscreen)"
+                :state="determineState(ShowState.Fullscreen)">
+                <font-awesome-icon
+                    icon="fa-solid fa-up-right-and-down-left-from-center" />
             </SidebarButton>
-            <SidebarButton @click="setShowState(ShowState.FullscreenWeightMaps)" :state="determineState(ShowState.FullscreenWeightMaps)">
+            <SidebarButton @click="setShowState(ShowState.FullscreenWeightMaps)"
+                :state="determineState(ShowState.FullscreenWeightMaps)">
                 <font-awesome-icon icon="fa-solid fa-layer-group" />
             </SidebarButton>
 
@@ -52,7 +60,7 @@ export default {
             return SidebarButtonState.Enabled;
         },
     },
-    components: { SomFullScreen }
+    components: { FullScreen }
 }
 </script>
 

@@ -5,11 +5,11 @@ import { states } from '@/logic/store';
 </script>
 
 <template>
-    <div id="fullScreen" class="somFullScreen">
+    <div id="fullScreen" class="somFullScreen" >
         <div class="fullScreenContent">
             <slot></slot>
 
-            <div class="closeFullScreen" @click="close()">
+            <div class="closeFullScreen" @click="closeFct()">
                 <font-awesome-icon icon="fa-solid fa-down-left-and-up-right-to-center" />
             </div>
         </div>
@@ -18,10 +18,22 @@ import { states } from '@/logic/store';
 
 <script lang="ts">
 export default {
+    props: ["closeFct"],
     methods: {
         close(){
             states.visualization = ShowState.Output;
+        },
+        escKey(e: any){
+            if(e.key === "Escape"){
+                this.closeFct();
+            }
         }
+    },
+    unmounted(){
+        document.body.removeEventListener("keydown", this.escKey)
+    },
+    mounted(){
+        document.body.addEventListener("keydown", this.escKey)
     }
 }
 </script>

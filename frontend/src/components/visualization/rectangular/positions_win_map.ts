@@ -23,7 +23,5 @@ export const calcWinMapPositions = (win_map: any, quadSize: any, circle_size: an
         }
     }
 
-    console.log(win_map_circles.length)
-
     return win_map_circles;
 }

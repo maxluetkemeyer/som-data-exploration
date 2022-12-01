@@ -30,7 +30,7 @@ import { database_connect_send } from "@/logic/tasks/database_connect"
                 <label for="input_user" class="form-label">User</label>
                 <div class="input-group mb-3">
                     <input v-model="store.database.user" type="text" id="input_user" class="form-control" placeholder="User" aria-label="User">
-                    <input v-model="store.database.pass" type="password" id="input_port" class="form-control" placeholder="Password" aria-label="Password">
+                    <input v-model="store.database.pass" type="password" id="input_password" class="form-control" placeholder="Password" aria-label="Password">
                 </div>
 
                 <div class="mb-3">

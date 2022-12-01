@@ -1,5 +1,5 @@
 import type p5 from "p5"
-import type { MyHexagon, MyPoint, MyRect } from "../models";
+import type { MyHexagon, MyPoint } from "../models";
 
 export const drawDistanceMap = (s: p5, distance_map_positions: MyHexagon[], a: number, r:number) => {
     s.noStroke()

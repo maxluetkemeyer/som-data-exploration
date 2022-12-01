@@ -1,10 +1,10 @@
 # https://websockets.readthedocs.io/en/stable/intro/tutorial1.html#solution
 
+import json
 import asyncio
 import websockets
-import json
-from tasks.area_selection import area_selection
 
+from tasks.area_selection import area_selection
 from tasks.database_connect import database_connect
 from tasks.decision_tree_train import decision_tree_train
 from tasks.query_data import query_data
@@ -50,12 +50,10 @@ async def send_message(websocket, title, body):
 
     await websocket.send(json.dumps(response))
 
-
 async def main():
     async with websockets.serve(handler, "", 8001):
         print("Starting websocket server on Port 8001")
         await asyncio.Future()  # run forever
-
 
 if __name__ == "__main__":
     asyncio.run(main())

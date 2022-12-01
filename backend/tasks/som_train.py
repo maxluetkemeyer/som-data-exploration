@@ -36,6 +36,9 @@ async def som_train(websocket, options):
     som.train(data=array, num_iteration=num_iteration,
               random_order=random_order, verbose=True)
 
+    som.quantization_error(data=array)
+    som.topographic_error(data=array)
+
     win_map_dict = som.win_map(array, return_indices=True)
     win_map = []
     for key in win_map_dict:

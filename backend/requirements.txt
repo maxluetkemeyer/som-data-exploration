@@ -17,3 +17,6 @@ websockets
 
 # misc
 pylint
+
+# webserver
+aiohttp[speedups]

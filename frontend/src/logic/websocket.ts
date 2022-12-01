@@ -13,7 +13,7 @@ export const createConnection = () => {
     connection.onopen = (event) => {
         console.log(event)
         console.log("Successfully connected to Websocket Server")
-        createMessage("Websocket", "Successfully connected to Websocket Server")
+        //createMessage("Websocket", "Successfully connected to Websocket Server")
     }
 
     connection.onclose = (event) => {

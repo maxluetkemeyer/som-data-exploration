@@ -19,7 +19,6 @@ import MessageBox from "./components/general/MessageBox.vue"
 <script lang="ts">
 export default {
   mounted() {
-    console.log("mounted")
     createConnection();
   },
 };
