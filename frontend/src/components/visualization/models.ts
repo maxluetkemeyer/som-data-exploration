@@ -1,12 +1,10 @@
 export class MyPoint {
     x: number;
     y: number;
-    color?: string;
 
-    constructor(x: number, y: number, color?: string){
+    constructor(x: number, y: number){
         this.x = x
         this.y = y
-        this.color = color
     }
 
     toObject(){
@@ -33,19 +31,14 @@ export class MyRect {
     bl: MyPoint;
     width: number;
     height: number;
-    color?: any;
-    somX?: number;
-    somY?: number;
 
-    constructor(tl: MyPoint, br: MyPoint, somX?: number, somY?: number){
+    constructor(tl: MyPoint, br: MyPoint){
         this.tl = tl;
         this.br = br;
         this.tr = new MyPoint(this.br.x, this.tl.y);
         this.bl = new MyPoint(this.tl.x, this.br.y);
         this.width = this.br.x - this.tl.x;
         this.height = this.br.y - this.tl.y;
-        this.somX = somX;
-        this.somY = somY;
     }
 
     overlap(rect: MyRect): boolean{
@@ -61,14 +54,49 @@ export class MyRect {
 
         return true;
     }
+
+    isPointInside(point: MyPoint): boolean {
+        if(this.tl.x > point.x) return false;
+        if(this.br.x < point.x) return false;
+        if(this.tl.y > point.y) return false;
+        if(this.br.y < point.y) return false;
+
+        return true;
+    }
+}
+
+export class MyRectWithSom extends MyRect{
+    somX: number;
+    somY: number;
+
+    constructor(tl: MyPoint, br: MyPoint, somX: number, somY: number){
+        super(tl, br);
+        this.somX = somX;
+        this.somY = somY;
+    }
 }
 
 export class MyHexagon {
     center: MyPoint;
-    color?: any;
 
-    constructor(center: MyPoint, color?: any){
+    constructor(center: MyPoint){
         this.center = center;
-        this.color = color;
     }
+}
+
+export class MyHexagonWithSom extends MyHexagon{
+    somX: number;
+    somY: number;
+
+    constructor(center: MyPoint, somX: number, somY: number){
+        super(center);
+        this.somX = somX;
+        this.somY = somY;
+    }
+}
+
+export enum DrawState {
+    Start,
+    Selecting,
+    Calc,
 }

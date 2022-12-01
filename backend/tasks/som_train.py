@@ -16,7 +16,7 @@ async def som_train(websocket, options):
     neighborhood_function = options["neighborhood"]
     topology = options["topology"]
     activation_distance = options["activation_distance"]
-    decay_function = options["decay_function"]  # TODO:
+    # decay_function = options["decay_function"]
     num_iteration = options["num_iterations"]
     random_order = options["random_order"]
 
@@ -36,9 +36,6 @@ async def som_train(websocket, options):
 
     som.train(data=array, num_iteration=num_iteration,
               random_order=random_order, verbose=True)
-
-    som.quantization_error(data=array)
-    som.topographic_error(data=array)
 
     win_map_dict = som.win_map(array, return_indices=True)
     win_map = []
@@ -64,12 +61,18 @@ async def som_train(websocket, options):
 
         weights_list.append(scaled)
 
+    topographic_error = -1
+    if topology == "rectangular":
+        topographic_error = som.topographic_error(data=array)
+
     response = {
         "type": "som_train",
         "som": {
             "distance_map": som.distance_map().tolist(),
             "win_map": win_map,
             "weights": weights_list,
+            "quantization_error": som.quantization_error(data=array),
+            "topographic_error": topographic_error
         }
     }
 

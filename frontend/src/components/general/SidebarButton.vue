@@ -31,11 +31,11 @@ export default {
 
 .sidebarButton:hover {
     background-color: #D6E4E5;
-    color: #EB6440;
+    color: var(--primary);
 }
 
 .sidebarButtonActive {
-    background-color: #EB6440;
+    background-color: var(--primary);
     color: #D6E4E5
 }
 </style>

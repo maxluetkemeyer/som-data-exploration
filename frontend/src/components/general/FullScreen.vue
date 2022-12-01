@@ -81,7 +81,7 @@ export default {
     cursor: pointer;
 }
 .closeFullScreen:hover {
-    border: 2px solid #EB6440;
-    color: #EB6440;
+    border: 2px solid var(--primary);
+    color: var(--primary);
 }
 </style>

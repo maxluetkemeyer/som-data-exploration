@@ -11,7 +11,7 @@ import { store } from "../logic/store"
     <div class="tables">
       <div v-for="table in store.tables" class="tableItem">{{ table }}</div>
     </div>
-    <div class="currentConnection">
+    <div class="currentConnection" @click="store.connected = false">
       {{ store.database.user }}@{{ store.database.host }}:{{store.database.port}} <br />
       {{ store.database.schema }}
     </div>

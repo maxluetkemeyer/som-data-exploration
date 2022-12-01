@@ -47,7 +47,7 @@ import Footer from "./Footer.vue";
   row-gap: 1vh;
   column-gap: 1vh;
   grid-template-columns: calc(50vw - 0.5vh) calc(50vw - 0.5vh);
-  grid-template-rows: 8.5vh 42.5vh 42.5vh 3.5vh;
+  grid-template-rows: 8.5vh 52.5vh 32.5vh 3.5vh;
   grid-template-areas:
     "nav nav"
     "left right-top"

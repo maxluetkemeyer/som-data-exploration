@@ -1,18 +1,21 @@
 import type p5 from "p5"
-import { MyPoint, MyRect, MyRectWithSom, DrawState } from "../models";
+import { MyPoint, MyHexagonWithSom, DrawState, MyRect } from "../models";
 import { store } from "@/logic/store";
+import { drawHexagon } from "./draw_distance_map";
 
-export class RectSelection {
+export class HexSelection {
     private state = DrawState.Start;
     private s: p5;
-    private mapPositions: MyRectWithSom[];
+    private r: number;
+    private mapPositions: MyHexagonWithSom[];
     private canvasSize: { width: number, height: number }
     private selections: MyRect[] = [];
     private mouseStartPoint: MyPoint = new MyPoint(0, 0)
     private onSelectedCb: Function;
 
-    constructor(s: p5, mapPositions: MyRectWithSom[], canvasSize: any, onSelectedCb: Function) {
+    constructor(s: p5, mapPositions: MyHexagonWithSom[], canvasSize: any, r: number, onSelectedCb: Function) {
         this.s = s;
+        this.r = r;
         this.mapPositions = mapPositions;
         this.canvasSize = canvasSize;
         this.onSelectedCb = onSelectedCb;
@@ -22,14 +25,8 @@ export class RectSelection {
                 if (sel.x == mapPosition.somX && sel.y == mapPosition.somY) {
                     this.selections.push(
                         new MyRect(
-                            new MyPoint(
-                                mapPosition.tl.x + 1,
-                                mapPosition.tl.y + 1
-                            ),
-                            new MyPoint(
-                                mapPosition.br.x - 1,
-                                mapPosition.br.y - 1,
-                            )
+                            mapPosition.center,
+                            mapPosition.center
                         )
                     )
                     return true;
@@ -129,13 +126,13 @@ export class RectSelection {
                 this.paint();
 
                 const neurons: any = [];
-                for (const myRect of this.mapPositions) {
+                for (const myHex of this.mapPositions) {
                     for (const selRect of this.selections) {
-                        if (!myRect.overlap(selRect)) continue;
+                        if (!selRect.isPointInside(myHex.center)) continue;
 
                         let skip = false;
                         for (const neuron of neurons) {
-                            if (neuron.x === myRect.somX && neuron.y === myRect.somY) {
+                            if (neuron.x === myHex.somX && neuron.y === myHex.somY) {
                                 skip = true;
                                 break;
                             }
@@ -143,8 +140,8 @@ export class RectSelection {
                         if (skip) continue;
 
                         neurons.push({
-                            x: myRect.somX,
-                            y: myRect.somY,
+                            x: myHex.somX,
+                            y: myHex.somY,
                         })
                     }
                 }
@@ -161,18 +158,13 @@ export class RectSelection {
     }
 
     private paint() {
-        for (const myRect of this.mapPositions) {
+        for (const myHex of this.mapPositions) {
             for (const selRect of this.selections) {
-                if (!myRect.overlap(selRect)) continue;
+                if (!selRect.isPointInside(myHex.center)) continue;
 
                 this.s.fill(253, 173, 92, 100)
                 this.s.stroke(255, 255, 255, 100)
-                this.s.rect(
-                    myRect.tl.x,
-                    myRect.tl.y,
-                    myRect.width,
-                    myRect.height,
-                )
+                drawHexagon(this.s, myHex.center, this.r)
             }
         }
     }

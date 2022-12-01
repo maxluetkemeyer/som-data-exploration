@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import p5 from 'p5';
 import { drawDistanceMap } from './draw_distance_map';
+import { HexSelection } from './draw_selection';
 import { drawWinMap } from './draw_win_map';
 import { calcDistanceMapPositions } from './positions_distance_map';
 import { calcWinMapPositions } from './positions_win_map';
@@ -14,7 +15,7 @@ import { calcWinMapPositions } from './positions_win_map';
 
 <script lang="ts">
 export default {
-    props: ["somMap", "winMap", "showWinMap", "containerId"],
+    props: ["somMap", "winMap", "showWinMap", "containerId", "colorScale", "onSelectedCb"],
     data() {
         return {
             somSize: {
@@ -46,20 +47,23 @@ export default {
 
         const circle_size = r * 0.3;
 
-        const distance_map_positions = calcDistanceMapPositions(this.somSize, this.somMap, a, r);
-        const win_map_positions = calcWinMapPositions(this.winMap, a, r, circle_size)
+        const distance_map_positions = calcDistanceMapPositions(this.somSize, r);
+        const win_map_positions = calcWinMapPositions(this.winMap, r, circle_size)
 
         const sketch = (s: p5) => {
+            let hexSel: HexSelection;
             let canvas;
 
             s.setup = () => {
                 canvas = s.createCanvas(this.canvasSize.width, this.canvasSize.height)
                 canvas.parent(this.containerId)
+                hexSel = new HexSelection(s, distance_map_positions, canvas.size(), r, this.onSelectedCb)
             }
 
             s.draw = () => {
-                drawDistanceMap(s, distance_map_positions, a, r);
+                drawDistanceMap(s, distance_map_positions, r, this.somMap, this.colorScale);
                 if(this.showWinMap) drawWinMap(s, win_map_positions, circle_size);
+                hexSel.draw();
             }
         }
 

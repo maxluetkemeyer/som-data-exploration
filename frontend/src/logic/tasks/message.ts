@@ -14,6 +14,8 @@ export const message = (options: {title: string, body: string}) => {
             states.visualization = ShowState.Settings
         case "decision_tree_train":
             states.boundaries = ShowState.Settings
+        case "som_mapsize":
+            states.visualization = ShowState.Settings
     }
 }
 

@@ -29,7 +29,7 @@ def create_decision_tree_dataset(selection):
     target_indices_set = set()
 
     for i in selection:
-        key = (i["y"], i["x"]) # x, y or y, x
+        key = (i["x"], i["y"]) # x, y or y, x
 
         target_indices_set.update(win_map[key])
 
