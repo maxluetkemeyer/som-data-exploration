@@ -68,6 +68,9 @@ export class RectSelection {
                 if (s.mouseIsPressed && s.mouseButton === s.RIGHT) {
                     this.selections = [];
                     store.som.selection = [];
+                    try {
+                        this.onSelectedCb();
+                    } catch (e) { }
                     return;
                 }
 

@@ -28,7 +28,8 @@ async def som_train(websocket, options):
 
     print(len(array))
 
-    som = MiniSom(x=neurons_x, y=neurons_y,
+    # x and y swapped???
+    som = MiniSom(x=neurons_y, y=neurons_x,
                   input_len=array.shape[1], sigma=sigma, learning_rate=learning_rate, neighborhood_function=neighborhood_function, random_seed=random_seed, topology=topology, activation_distance=activation_distance,)
 
     som.pca_weights_init(array)

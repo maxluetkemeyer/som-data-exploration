@@ -16,7 +16,7 @@ import RectSom from './rectangular/RectSom.vue';
                 :showWinMap="false" :containerId="'weightMap' + index"
                 :onSelectedCb="onSelectedCb"
                 :key="('weightMap' + index + keyCounter)"
-                class="canvasContainer" />
+                class="canvasContainer" :style="sizeClass" />
             <HexSom v-else :somMap="item" :winMap="store.som.result.win_map"
                 :showWinMap="false" :containerId="'weightMap' + index"
                 :onSelectedCb="onSelectedCb" class="canvasContainer" />
@@ -32,13 +32,23 @@ export default {
             keyCounter: 0,
         }
     },
+    computed: {
+        sizeClass() {
+            return {
+                "width": store.som.settings.neurons.x+"rem",
+                "height": store.som.settings.neurons.y+"rem",
+            }
+        },
+    },
     methods: {
         onSelectedCb() {
             this.keyCounter++;
-        }
+        },
     },
     mounted() {
         document.getElementById("somWeightMaps")?.addEventListener("contextmenu", (e) => e.preventDefault())
+
+
     }
 }
 </script>
@@ -60,8 +70,8 @@ export default {
 }
 
 .canvasContainer {
-    width: 20rem;
-    height: 20rem;
+    /*width: 20rem;
+    height: 20rem;*/
     display: flex;
     justify-content: center;
     border: 1px solid black;
