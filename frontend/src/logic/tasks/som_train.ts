@@ -10,8 +10,10 @@ export const som_train = (som: any) => {
 export const som_train_send = () => {
     states.visualization = ShowState.Loading;
 
+    store.som.selection = []
+
     const msg = {
-        type:"som_train",
+        type: "som_train",
         options: store.som.settings,
     }
 

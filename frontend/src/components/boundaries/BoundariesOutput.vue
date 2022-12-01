@@ -1,17 +1,22 @@
 <script lang="ts" setup>
 import { format } from 'sql-formatter';
 import { store } from '@/logic/store';
+import { decision_tree_train_send } from '@/logic/tasks/decision_tree_train';
+import { createMessage } from '@/logic/tasks/message';
 </script>
 
 <template>
     <div class="boundariesOutput">
 
-        <textarea id="boundariesOutputText" class="form-control">{{ format(store.boundaries, { language: "sql" }) }}</textarea>
+        <textarea id="boundariesOutputText"
+            class="form-control">{{ format(store.boundaries, { language: "sql" }) }}</textarea>
 
         <div class="boundariesOutputMenu">
-            <button class="btn btn-primary">Add to Query</button>
+            <button @click="decision_tree_train_send();"
+                class="btn btn-primary">Calculate boundaries</button>
 
-            <button @click="copyToClipboard()" class="btn btn-primary">Copy to Clipboard</button>
+            <button @click="copyToClipboard()" class="btn btn-primary">Copy to
+                Clipboard</button>
         </div>
     </div>
 </template>
@@ -22,13 +27,23 @@ export default {
         copyToClipboard() {
             // https://www.w3schools.com/howto/howto_js_copy_clipboard.asp
             // Get the text field
-            const copyText = document.getElementById("boundariesOutputText");
+            const copyText = document.getElementById("boundariesOutputText")! as HTMLInputElement;
 
             // Select the text field
-            const text = copyText?.innerText || ""
+            copyText!.select();
 
             // Copy the text inside the text field
-            navigator.clipboard.writeText(text);
+            navigator.clipboard.writeText(copyText.value);
+
+            if (window.getSelection) {
+                if (window.getSelection()?.empty) {  // Chrome
+                    window.getSelection()?.empty();
+                } else if (window.getSelection()?.removeAllRanges) {  // Firefox
+                    window.getSelection()?.removeAllRanges();
+                }
+            }
+
+            createMessage("Boundaries", "Copied to Clipboard")
         }
     }
 }

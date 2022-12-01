@@ -8,6 +8,13 @@ export class MyPoint {
         this.y = y
         this.color = color
     }
+
+    toObject(){
+        return {
+            x: this.x,
+            y: this.y
+        }
+    }
 }
 
 export class MyCircle extends MyPoint{
@@ -27,15 +34,18 @@ export class MyRect {
     width: number;
     height: number;
     color?: any;
+    somX?: number;
+    somY?: number;
 
-    constructor(tl: MyPoint, br: MyPoint, color?: any){
+    constructor(tl: MyPoint, br: MyPoint, somX?: number, somY?: number){
         this.tl = tl;
         this.br = br;
         this.tr = new MyPoint(this.br.x, this.tl.y);
         this.bl = new MyPoint(this.tl.x, this.br.y);
         this.width = this.br.x - this.tl.x;
         this.height = this.br.y - this.tl.y;
-        this.color = color;
+        this.somX = somX;
+        this.somY = somY;
     }
 
     overlap(rect: MyRect): boolean{

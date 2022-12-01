@@ -11,14 +11,17 @@ import { states } from '@/logic/store';
 <template>
     <div class="boundaries">
         <div class="content">
-            <BoundariesSettings v-if="states.boundaries == ShowState.Settings" />
+            <BoundariesSettings
+                v-if="states.boundaries == ShowState.Settings" />
             <BoundariesOutput v-else />
         </div>
         <div class="sidebar">
-            <SidebarButton @click="setShowState(ShowState.Settings)" :state="determineState(ShowState.Settings)">
+            <SidebarButton @click="setShowState(ShowState.Settings)"
+                :state="determineState(ShowState.Settings)">
                 <font-awesome-icon icon="fa-solid fa-gear" />
             </SidebarButton>
-            <SidebarButton @click="setShowState(ShowState.Output)" :state="determineState(ShowState.Output)">
+            <SidebarButton @click="setShowState(ShowState.Output)"
+                :state="determineState(ShowState.Output)">
                 <font-awesome-icon icon="fa-solid fa-square-poll-horizontal" />
             </SidebarButton>
         </div>

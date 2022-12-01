@@ -1,10 +1,14 @@
 import type p5 from "p5"
 import type { MyRect } from "../models";
+import chroma from "chroma-js";
 
-export const drawDistanceMap = (s: p5, distance_map_positions: MyRect[]) => {
+const myScale = chroma.scale(["red", "blue"]).mode("lab")
+
+export const drawDistanceMap = (s: p5, distance_map_positions: MyRect[], map: any) => {
     s.noStroke()
     for(const myRect of distance_map_positions){
-        s.fill(myRect.color)
+        let num: number = map[myRect.somY!][myRect.somX!];
+        s.fill(myScale(num).hex())
         s.quad(myRect.tl.x, 
                 myRect.tl.y, 
                 myRect.tr.x,

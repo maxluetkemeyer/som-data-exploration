@@ -5,7 +5,7 @@ import RectSom from './rectangular/RectSom.vue';
 </script>
 
 <template>
-    <div class="somOutput">
+    <div id="somOutput" class="somOutput">
         <RectSom v-if="store.som.settings.topology === 'rectangular'"
             :somMap="store.som.result.distance_map"
             :winMap="store.som.result.win_map" :showWinMap="true"
@@ -15,6 +15,14 @@ import RectSom from './rectangular/RectSom.vue';
             containerId="canvasContainer" />
     </div>
 </template>
+
+<script lang="ts">
+export default {
+    mounted() {
+        document.getElementById("somOutput")?.addEventListener("contextmenu", (e) => e.preventDefault())
+    }
+}
+</script>
 
 <style scoped>
 .somOutput {

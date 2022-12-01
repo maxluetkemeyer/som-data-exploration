@@ -1,5 +1,5 @@
 // store.js
-import { MyPoint } from '@/components/visualization/models';
+import type { MyPoint } from '@/components/visualization/models';
 import { reactive } from 'vue'
 import { Message, ShowState } from './models'
 
@@ -39,10 +39,7 @@ export const store = reactive({
       weights: [[[]]],
       win_map: [],
     },
-    selection: {
-      mouseStart: new MyPoint(0, 0),
-      mouseEnd: new MyPoint(0, 0),
-    },
+    selection: [],
   },
   messages: msgArray,
   boundaries: "",

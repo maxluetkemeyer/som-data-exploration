@@ -15,7 +15,7 @@ import { calcWinMapPositions } from './positions_win_map';
 
 <script lang="ts">
 export default {
-    props: ["somMap", "winMap", "showWinMap", "containerId"],
+    props: ["somMap", "winMap", "showWinMap", "containerId", "onSelectedCb"],
     data() {
         return {
             somSize: {
@@ -46,7 +46,7 @@ export default {
         const quadSize = Math.min(qsw, qsh)
         const circle_size = quadSize * 0.2;
 
-        const distance_map_positions = calcDistanceMapPositions(this.somSize, quadSize, this.somMap);
+        const distance_map_positions = calcDistanceMapPositions(this.somSize, quadSize);
         const win_map_positions = calcWinMapPositions(this.winMap, quadSize, circle_size);
 
         const sketch = (s: p5) => {
@@ -56,11 +56,11 @@ export default {
             s.setup = () => {
                 canvas = s.createCanvas(this.somSize.width * quadSize, this.somSize.height * quadSize)
                 canvas.parent(this.containerId)
-                rectSel = new RectSelection(s, distance_map_positions, canvas.size())
+                rectSel = new RectSelection(s, distance_map_positions, canvas.size(), this.onSelectedCb)
             }
 
             s.draw = () => {
-                drawDistanceMap(s, distance_map_positions);
+                drawDistanceMap(s, distance_map_positions, this.somMap);
                 if (this.showWinMap) drawWinMap(s, win_map_positions);
                 rectSel.draw();
             }

@@ -13,12 +13,7 @@ export const decision_tree_train_send = async () => {
     const msg = {
         type:"decision_tree_train",
         options: {
-            selection: [
-                {
-                    "x": 0,
-                    "y": 0, 
-                }
-            ]
+            selection: store.som.selection
         }
     }
 

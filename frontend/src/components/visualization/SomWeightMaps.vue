@@ -7,21 +7,41 @@ import RectSom from './rectangular/RectSom.vue';
 </script>
 
 <template>
-    <div class="somWeightMaps">
+    <div id="somWeightMaps" class="somWeightMaps">
         <div v-for="(item, index) in store.som.result.weights"
             class="weight_map">
             <p>{{ Object.keys(store.data[0])[index] }}</p>
             <RectSom v-if="store.som.settings.topology === 'rectangular'"
                 :somMap="item" :winMap="store.som.result.win_map"
                 :showWinMap="false" :containerId="'weightMap' + index"
+                :onSelectedCb="onSelectedCb"
+                :key="('weightMap' + index + keyCounter)"
                 class="canvasContainer" />
             <HexSom v-else :somMap="item" :winMap="store.som.result.win_map"
                 :showWinMap="false" :containerId="'weightMap' + index"
-                class="canvasContainer" />
+                :onSelectedCb="onSelectedCb" class="canvasContainer" />
         </div>
 
     </div>
 </template>
+
+<script lang="ts">
+export default {
+    data() {
+        return {
+            keyCounter: 0,
+        }
+    },
+    methods: {
+        onSelectedCb() {
+            this.keyCounter++;
+        }
+    },
+    mounted() {
+        document.getElementById("somWeightMaps")?.addEventListener("contextmenu", (e) => e.preventDefault())
+    }
+}
+</script>
 
 <style scoped>
 .somWeightMaps {
