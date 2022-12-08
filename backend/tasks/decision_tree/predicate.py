@@ -1,16 +1,25 @@
 # https://github.com/denmartins/enablingnontechsdb/blob/master/qbe/treeqbe.py
 
 import numpy as np
+import pandas as pd
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.utils import check_random_state
 
 
 class DecisionTreeQBE(object):
     def __init__(self, dataframe, desired_indexes):
-        total_indexes = [t for t in range(dataframe.shape[0])]
+        #total_indexes = [t for t in range(dataframe.shape[0])]
+
+        #print(total_indexes)
 
         all_data = dataframe.copy(True)
-        all_data['class'] = [int(x in desired_indexes) for x in total_indexes]
+        #all_data['class'] = [int(x in desired_indexes) for x in total_indexes]
+
+        #print(all_data["class"])
+        # Self
+        all_data["class"] = desired_indexes
+        pd.set_option('display.max_rows', None)
+        # print(all_data["class"])
 
         # Shuffle data
         rng = check_random_state(0)

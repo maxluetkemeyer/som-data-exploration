@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import NavBar from "./NavBar.vue";
+import Navigation from "./Navigation.vue";
 import SOM from "./visualization/SOM.vue"
 import Boundaries from "./boundaries/Boundaries.vue"
 import { states } from "@/logic/store";
@@ -12,7 +12,7 @@ import Footer from "./Footer.vue";
 <template>
   <div class="grid-container">
     <div class="navContainer">
-      <NavBar />
+      <Navigation />
     </div>
 
     <div class="dataContainer">

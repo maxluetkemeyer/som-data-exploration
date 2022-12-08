@@ -29,7 +29,7 @@ async def som_train(websocket, options):
     print(len(array))
 
     # x and y swapped???
-    som = MiniSom(x=neurons_y, y=neurons_x,
+    som = MiniSom(x=neurons_x, y=neurons_y,
                   input_len=array.shape[1], sigma=sigma, learning_rate=learning_rate, neighborhood_function=neighborhood_function, random_seed=random_seed, topology=topology, activation_distance=activation_distance,)
 
     som.pca_weights_init(array)
@@ -41,7 +41,7 @@ async def som_train(websocket, options):
     win_map = []
     for key in win_map_dict:
         win_map.append({
-            "coordinates": list(key),
+            "coordinates": list(key), # tested: y, x
             "indices": win_map_dict[key],
         })
 

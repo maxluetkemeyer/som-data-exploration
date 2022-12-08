@@ -7,6 +7,7 @@ export const calcWinMapPositions = (win_map: any, quadSize: any, circle_size: an
     const win_map_circles: MyCircle[] = []
 
     for (const neuron of win_map) {
+        // Coordinates [y, x]
         const x = neuron.coordinates[1]
         const y = neuron.coordinates[0]
 

@@ -29,8 +29,7 @@ def create_decision_tree_dataset(selection):
     target_indices_set = set()
 
     for i in selection:
-        key = (i["x"], i["y"]) # x, y or y, x
-
+        key = (i["y"], i["x"]) # x, y or y, x
         target_indices_set.update(win_map[key])
 
     decision_tree_targets = []
@@ -39,6 +38,8 @@ def create_decision_tree_dataset(selection):
             decision_tree_targets.append(1)
         else:
             decision_tree_targets.append(0)
+
+    # [0, 0, 0, 1, 1, 0, 0]
 
     # data_dt = storage.data.assign(dtTarget=decision_tree_targets)
 
