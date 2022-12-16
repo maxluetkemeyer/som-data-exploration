@@ -1,49 +1,32 @@
-import http.server
-import socketserver
+import concurrent.futures
 import asyncio
-import websockets
-from aiohttp import web
 
-from backend import handler
-
+from websocket import websocket
+from webserver import webserver
 
 PORT = 8000
 PORT_WS = PORT + 1
-DIRECTORY = "../frontend/dist/"
 
 
-async def websocket():
-    print("hallo")
-    async with websockets.serve(handler, "", PORT_WS):
-        print("Websocket Server: ", PORT_WS)
-        await asyncio.Future()  # run forever
-
-##########
-
-
-class Handler(http.server.SimpleHTTPRequestHandler):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, directory=DIRECTORY, **kwargs)
-
-
-async def webserver():
-    with socketserver.TCPServer(("", PORT), Handler) as httpd:
-        print("HTTP Server: ", PORT)
-        httpd.serve_forever()
-
-
-############
-async def hello(request):
-    return web.Response(text="Hello, world")
-
-app = web.Application()
-app.add_routes([web.get('/', hello)])
+async def non_blocking():
+    """https://stackoverflow.com/questions/41063331/how-to-use-asyncio-with-existing-blocking-library/53719009#53719009
+    Run three of the blocking tasks concurrently. asyncio.wait will
+    automatically wrap these in Tasks. If you want explicit access
+    to the tasks themselves, use asyncio.ensure_future, or add a
+    "done, pending = asyncio.wait..." assignment
+    """
+    executor = concurrent.futures.ThreadPoolExecutor(max_workers=5)
+    loop = asyncio.get_running_loop()
+    await asyncio.wait(
+        fs={
+            loop.run_in_executor(executor, webserver, PORT),
+        },
+        return_when=asyncio.ALL_COMPLETED
+    )
 
 
 async def main():
-    asyncio.gather(websocket())
-    web.run_app(app)
+    await asyncio.gather(websocket(PORT_WS), non_blocking())
 
 
-if __name__ == "__main__":
-    asyncio.run(main())
+asyncio.run(main())

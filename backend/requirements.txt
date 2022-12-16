@@ -19,4 +19,4 @@ websockets
 pylint
 
 # webserver
-aiohttp[speedups]
+aiohttp

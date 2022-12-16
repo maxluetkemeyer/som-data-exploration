@@ -51,10 +51,7 @@ async def send_message(websocket, title, body):
     await websocket.send(json.dumps(response))
 
 
-async def main():
-    async with websockets.serve(handler, "", 8001):
-        print("Starting websocket server on Port 8001")
+async def websocket(PORT):
+    async with websockets.serve(handler, "", PORT):
+        print("Starting websocket server on Port {}".format(PORT))
         await asyncio.Future()  # run forever
-
-if __name__ == "__main__":
-    asyncio.run(main())
