@@ -42,6 +42,7 @@ export const store = reactive({
     },
     selection: [],
     colorManipulator: 0.0,
+    displayPropability
   },
   messages: msgArray,
   boundaries: "",

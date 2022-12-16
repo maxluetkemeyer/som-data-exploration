@@ -50,6 +50,7 @@ async def send_message(websocket, title, body):
 
     await websocket.send(json.dumps(response))
 
+
 async def main():
     async with websockets.serve(handler, "", 8001):
         print("Starting websocket server on Port 8001")

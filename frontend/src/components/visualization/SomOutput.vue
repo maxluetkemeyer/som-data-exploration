@@ -9,6 +9,8 @@ import RectSom from './rectangular/RectSom.vue';
     <div id="somOutput" class="somOutput">
         <input v-model="store.som.colorManipulator" type="range"
             class="form-range" min="-1" max="1" step="0.001">
+        <input v-model="store.som.colorManipulator" type="range"
+            class="form-range" min="-1" max="1" step="0.001">
 
         <RectSom v-if="store.som.settings.topology === 'rectangular'"
             :somMap="store.som.result.distance_map"
