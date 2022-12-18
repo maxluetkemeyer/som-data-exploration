@@ -6,7 +6,7 @@ from sklearn.preprocessing import normalize, MinMaxScaler
 
 
 async def som_train(websocket, options):
-    print("som_train task")
+    storage.printTask("som_train")
 
     neurons_x = options["neurons"]["x"]
     neurons_y = options["neurons"]["y"]

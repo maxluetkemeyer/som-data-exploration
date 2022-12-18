@@ -1,18 +1,23 @@
 import json
+import os 
 import storage
-from sklearn import tree
 
 from tasks.decision_tree.predicate import DecisionTreeQBE
 
 
 async def decision_tree_train(websocket, options):
-    print("decision_tree_train task")
+    storage.printTask("decision_tree_train")
 
     selection = options["selection"]
     target_list = create_decision_tree_dataset(selection=selection)
 
     dtqbe = DecisionTreeQBE(storage.data, target_list)
     output = dtqbe.search_best_predicate()
+
+    
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    path = os.path.join(dir_path, "../../frontend/dist/assets/tree.svg")
+    dtqbe.saveTreePlot(path)
 
     print("finished decision tree")
 

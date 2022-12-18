@@ -1,6 +1,6 @@
 <template>
     <footer>
-        Interactive data visualization with self-organizing maps for relational databases - Bachelor Thesis - Max Lütkemeyer - Münster 2023
+        Interactive data visualization and exploration with self-organizing maps - Bachelor Thesis - Max Lütkemeyer - Münster 2023
     </footer>
 </template>
 

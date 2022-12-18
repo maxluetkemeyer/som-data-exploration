@@ -51,5 +51,5 @@ export const store = reactive({
 export const states = reactive({
   data: ShowState.Settings,
   visualization: ShowState.Settings,
-  boundaries: ShowState.Settings,
+  boundaries: ShowState.Output,
 })

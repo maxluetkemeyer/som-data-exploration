@@ -1,5 +1,6 @@
 import http.server
 import socketserver
+import storage
 
 DIRECTORY = "./frontend/dist/"
 
@@ -11,5 +12,5 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
 def webserver(PORT):
     with socketserver.TCPServer(("", PORT), Handler) as httpd:
-        print("Starting webserver on Port {}".format(PORT))
+        storage.printSucces("Starting Webserver on port {}".format(PORT))
         httpd.serve_forever()

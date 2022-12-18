@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import BoundariesOutput from './BoundariesOutput.vue';
-import BoundariesSettings from "./BoundariesSettings.vue"
 import SidebarButton from "../general/SidebarButton.vue";
 import { ShowState, SidebarButtonState } from "@/logic/models";
 import { states } from '@/logic/store';
+import BoundariesTree from './BoundariesTree.vue';
 
 </script>
 
@@ -11,18 +11,17 @@ import { states } from '@/logic/store';
 <template>
     <div class="boundaries">
         <div class="content">
-            <BoundariesSettings
-                v-if="states.boundaries == ShowState.Settings" />
-            <BoundariesOutput v-else />
+            <BoundariesOutput v-if="states.boundaries == ShowState.Output" />
+            <BoundariesTree v-else />
         </div>
         <div class="sidebar">
-            <SidebarButton @click="setShowState(ShowState.Settings)"
-                :state="determineState(ShowState.Settings)">
-                <font-awesome-icon icon="fa-solid fa-gear" />
-            </SidebarButton>
             <SidebarButton @click="setShowState(ShowState.Output)"
                 :state="determineState(ShowState.Output)">
                 <font-awesome-icon icon="fa-solid fa-square-poll-horizontal" />
+            </SidebarButton>
+            <SidebarButton @click="setShowState(ShowState.Settings)"
+                :state="determineState(ShowState.Settings)">
+                <font-awesome-icon icon="fa-solid fa-tree" />
             </SidebarButton>
         </div>
     </div>
@@ -35,11 +34,12 @@ export default {
             states.boundaries = state;
         },
         determineState(state: ShowState) {
-            if (states.boundaries == state) return SidebarButtonState.Active;
-
+            if (states.boundaries == state)
+                return SidebarButtonState.Active;
             return SidebarButtonState.Enabled;
         }
-    }
+    },
+    components: { BoundariesTree }
 }
 </script>
 

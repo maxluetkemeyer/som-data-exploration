@@ -3,31 +3,38 @@ import numpy as np
 import storage
 
 
-# :lattice: 'rectangular' or 'hexagonal'
 async def som_mapsize(websocket, lattice):
-    print("som_mapsize task")
+    """
+    Calculates the optimal map size for the given lattice.
+    :lattice: 'rectangular' or 'hexagonal'
+    """
+    # Print colored Task name
+    storage.printTask("som_mapsize")
 
-    print(lattice)
-    array = storage.data.values
+    # Create matrix of the data Dataframe
+    dataArray = storage.data.values
 
-    map_size = calculate_map_size(array, lattice)
+    # Calculate map size
+    map_size = calculate_map_size(dataArray, lattice)
 
+    # Response with map size attached
     response = {
         "type": "som_mapsize",
         "map_size": map_size
     }
 
+    # Send response
     await websocket.send(json.dumps(response))
 
 
-# data to be clustered, represented as a matrix of n rows,
-# as inputs and m cols as input features
 def calculate_map_size(data, lattice):
     """
     Calculates the optimal map size given a dataset using eigenvalues and
-    eigenvectors. Matlab ported
+    eigenvectors.
+    Inspired by https://github.com/sevamoo/SOMPY/blob/cba0bcab065f91fc862c15f534f64858a7058ff4/sompy/sompy.py
+    :data: matrix of n rows (instances) and m cols (features)
     :lattice: 'rectangular' or 'hexagonal'
-    :return: map sizes
+    :return: map size dictonary {"y": int, "x": int} 
     """
     D = data.copy()
     dlen = D.shape[0]

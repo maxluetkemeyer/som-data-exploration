@@ -2,6 +2,8 @@
 
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn import tree
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.utils import check_random_state
 
@@ -34,9 +36,9 @@ class DecisionTreeQBE(object):
         self.columns = dataframe.columns
 
     def search_best_predicate(self):
-        model = DecisionTreeClassifier(criterion='gini')
-        model.fit(self.training_data, self.training_target)
-        return self.get_predicate(model)
+        self.model = DecisionTreeClassifier(criterion='gini')
+        self.model.fit(self.training_data, self.training_target)
+        return self.get_predicate(self.model)
 
     def get_predicate(self, tree):
         left = tree.tree_.children_left
@@ -94,3 +96,8 @@ class DecisionTreeQBE(object):
 
         predicate = ''.join(rules)
         return predicate
+
+    def saveTreePlot(self, path):
+        plt.figure()
+        tree.plot_tree(self.model, filled=True)
+        plt.savefig(path, format='svg') # bbox_inches = "tight"
