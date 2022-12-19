@@ -1,5 +1,6 @@
 // store.js
 import type { MyPoint } from '@/components/visualization/models';
+import chroma from 'chroma-js';
 import { reactive } from 'vue'
 import { Message, ShowState } from './models'
 
@@ -30,8 +31,8 @@ export const store = reactive({
       neighborhood: "gaussian",
       topology: "rectangular",
       activation_distance: "euclidean",
-      num_iterations: 4000,
-      random_order: false,
+      num_iterations: 10000,
+      random_order: true,
     },
     result: {
       distance_map: [[]],
@@ -41,8 +42,8 @@ export const store = reactive({
       topographic_error: 0,
     },
     selection: [],
-    colorManipulator: 0.0,
-    displayPropability: 1.0,
+    umatrixColorScale: chroma.scale(["#ffffff", "black"]).mode("lab"),
+    displayInstancesPerNeuron: 100,
   },
   messages: msgArray,
   boundaries: "",

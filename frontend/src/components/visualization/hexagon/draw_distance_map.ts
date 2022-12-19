@@ -10,11 +10,9 @@ export const drawDistanceMap = (s: p5, distance_map_positions: MyHexagonWithSom[
     s.noStroke()
 
     for(const myHex of distance_map_positions){
-        const mapVal: number = map[myHex.somY][myHex.somX];
-        const man = parseFloat(store.som.colorManipulator+""); //the html input transforms this into a string
-        const intensity = clamp(mapVal+man, 0, 1)
+        const color: number = map[myHex.somY][myHex.somX];
 
-        s.fill(colorScale(intensity).hex())
+        s.fill(colorScale(color).hex())
         drawHexagon(s, myHex.center, r)
     }
 }

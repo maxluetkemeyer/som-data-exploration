@@ -3,32 +3,44 @@ import { store } from '@/logic/store';
 import chroma from 'chroma-js';
 import HexSom from './hexagon/HexSom.vue';
 import RectSom from './rectangular/RectSom.vue';
+import VizControlls from './VizControlls.vue';
+import Legend from "./Legend.vue"
 </script>
 
 <template>
     <div id="somOutput" class="somOutput">
-        <input v-model="store.som.colorManipulator" type="range"
-            class="form-range" min="-1" max="1" step="0.001">
-        <input v-model="store.som.colorManipulator" type="range"
-            class="form-range" min="-1" max="1" step="0.001">
+        <div class="somOutputVisualization">
+            <RectSom v-if="store.som.settings.topology === 'rectangular'"
+                :somMap="store.som.result.distance_map"
+                :winMap="store.som.result.win_map" :showWinMap="true"
+                :colorScale="store.som.umatrixColorScale"
+                containerId="canvasContainer"
+                :key="'rect' + store.som.displayInstancesPerNeuron" />
+            <HexSom v-else :somMap="store.som.result.distance_map"
+                :winMap="store.som.result.win_map" :showWinMap="true"
+                :colorScale="store.som.umatrixColorScale"
+                containerId="canvasContainer"
+                :key="'hex' + store.som.displayInstancesPerNeuron" />
 
-        <RectSom v-if="store.som.settings.topology === 'rectangular'"
-            :somMap="store.som.result.distance_map"
-            :winMap="store.som.result.win_map" :showWinMap="true"
-            :colorScale="colorScale" containerId="canvasContainer" />
-        <HexSom v-else :somMap="store.som.result.distance_map"
-            :winMap="store.som.result.win_map" :showWinMap="true"
-            :colorScale="colorScale" containerId="canvasContainer" />
+            <Legend :minMaxColorScale="minMaxColorScale" />
+        </div>
+
 
         <div class="input-group">
             <span class="input-group-text">Quantization Error</span>
-            <input v-model="store.som.result.quantization_error" type="number"
-                class="form-control" placeholder="Quantization Error"
-                aria-label="Quantization Error" disabled>
+            <span class="input-group-text">{{
+                    store.som.result.quantization_error.toFixed(8)
+            }}</span>
             <span class="input-group-text">Topographic Error</span>
-            <input v-model="store.som.result.topographic_error" type="number"
-                class="form-control" placeholder="Topographic Error"
-                aria-label="Topographic Error" disabled>
+            <span class="input-group-text">{{
+                    store.som.result.topographic_error.toFixed(8)
+            }}</span>
+            <span class="input-group-text sliderInline">
+                <input v-model="store.som.displayInstancesPerNeuron"
+                    type="range" class="form-range" min="0" max="100" step="1">
+            </span>
+            <span class="input-group-text">{{ store.som.displayInstancesPerNeuron }} Pts./Neuron</span>
+            
         </div>
     </div>
 </template>
@@ -37,12 +49,14 @@ import RectSom from './rectangular/RectSom.vue';
 export default {
     data() {
         return {
-            colorScale: chroma.scale(["#fafafa", "grey"]).mode("lab")
-        }
+            minMaxColorScale: chroma.scale(["white", "black"]).mode("lab")
+        };
     },
+
     mounted() {
-        document.getElementById("somOutput")?.addEventListener("contextmenu", (e) => e.preventDefault())
-    }
+        document.getElementById("somOutput")?.addEventListener("contextmenu", (e) => e.preventDefault());
+    },
+    components: { VizControlls }
 }
 </script>
 
@@ -50,17 +64,23 @@ export default {
 .somOutput {
     height: 100%;
     width: 100%;
+
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     gap: 1rem;
 }
 
-.canvasContainer {
-    height: 100%;
+.somOutputVisualization {
     width: 100%;
+    height: 100%;
     display: flex;
-    justify-content: center;
-    /* align-items: center; */
+    flex-direction: row;
+}
+
+.sliderInline {
+    flex-grow: 1;
+    padding: 0 10px;
+    transform: translateY(0);
 }
 </style>

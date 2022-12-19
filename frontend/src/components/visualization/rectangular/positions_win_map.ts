@@ -1,3 +1,4 @@
+import { store } from "@/logic/store"
 import { MyCircle } from "../models"
 
 export const calcWinMapPositions = (win_map: any, quadSize: any, circle_size: any): MyCircle[] => {
@@ -14,7 +15,11 @@ export const calcWinMapPositions = (win_map: any, quadSize: any, circle_size: an
         const xCenter = x * quadSize + quadSize / 2
         const yCenter = y * quadSize + quadSize / 2
 
+        let count = 0;
         for (const idx of neuron.indices) {
+            if(count >= store.som.displayInstancesPerNeuron) break;
+            count++;
+
             const xOffset = (quadSize / 2 - circle_size) * (Math.random() * 2 - 1)
             const yOffset = (quadSize / 2 - circle_size) * (Math.random() * 2 - 1)
 

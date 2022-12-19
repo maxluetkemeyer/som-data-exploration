@@ -7,7 +7,6 @@ import { createMessage } from '@/logic/tasks/message';
 
 <template>
     <div class="boundariesOutput">
-
         <textarea id="boundariesOutputText"
             class="form-control">{{ format(store.boundaries, { language: "sql" }) }}</textarea>
 

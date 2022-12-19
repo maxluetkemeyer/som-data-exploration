@@ -3,14 +3,14 @@ import { store } from '@/logic/store';
 import chroma from 'chroma-js';
 import HexSom from './hexagon/HexSom.vue';
 import RectSom from './rectangular/RectSom.vue';
+import VizControlls from './VizControlls.vue';
 
 
 </script>
 
 <template>
     <div id="somWeightMaps" class="somWeightMaps">
-        <input v-model="store.som.colorManipulator" type="range"
-            class="form-range" min="-1" max="1" step="0.001">
+        <VizControlls />
 
         <div class="weightMapsContainer">
             <div v-for="(item, index) in store.som.result.weights"
@@ -18,14 +18,14 @@ import RectSom from './rectangular/RectSom.vue';
                 <p>{{ Object.keys(store.data[0])[index] }}</p>
                 <RectSom v-if="store.som.settings.topology === 'rectangular'"
                     :somMap="item" :winMap="store.som.result.win_map"
-                    :showWinMap="false" :containerId="'weightMap' + index"
+                    :showWinMap="true" :containerId="'weightMap' + index"
                     :colorScale="colorScale" :onSelectedCb="onSelectedCb"
-                    :key="('weightMapRect' + index + keyCounter)"
+                    :key="('weightMapRect' + index + keyCounter + store.som.displayInstancesPerNeuron)"
                     class="canvasContainer" :style="sizeClass" />
                 <HexSom v-else :somMap="item" :winMap="store.som.result.win_map"
-                    :showWinMap="false" :containerId="'weightMap' + index"
+                    :showWinMap="true" :containerId="'weightMap' + index"
                     :colorScale="colorScale" :onSelectedCb="onSelectedCb"
-                    :key="('weightMapHex' + index + keyCounter)"
+                    :key="('weightMapHex' + index + keyCounter + store.som.displayInstancesPerNeuron)"
                     class="canvasContainer" :style="sizeClass" />
             </div>
         </div>
@@ -41,24 +41,24 @@ export default {
         return {
             keyCounter: 0,
             colorScale: chroma.scale(["red", "blue"]).mode("lab")
-        }
+        };
     },
     computed: {
         sizeClass() {
             const multiplier = 22;
             const x = store.som.settings.neurons.x;
             const y = store.som.settings.neurons.y;
-
             if (x > y) {
                 return {
                     "width": multiplier + "rem",
                     "height": y / x * multiplier + "rem"
-                }
-            } else {
+                };
+            }
+            else {
                 return {
                     "width": x / y * multiplier + "rem",
                     "height": multiplier + "rem"
-                }
+                };
             }
         },
     },
@@ -68,7 +68,7 @@ export default {
         },
     },
     mounted() {
-        document.getElementById("somWeightMaps")?.addEventListener("contextmenu", (e) => e.preventDefault())
+        document.getElementById("somWeightMaps")?.addEventListener("contextmenu", (e) => e.preventDefault());
     }
 }
 </script>

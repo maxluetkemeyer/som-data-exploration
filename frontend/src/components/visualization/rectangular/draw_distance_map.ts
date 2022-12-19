@@ -8,11 +8,9 @@ const clamp = (num: number, min: number, max: number) => Math.min(Math.max(num, 
 export const drawDistanceMap = (s: p5, distance_map_positions: MyRectWithSom[], map: any, colorScale: chroma.Scale) => {
     s.noStroke()
     for (const myRect of distance_map_positions) {
-        const mapVal: number = map[myRect.somY][myRect.somX];
-        const man = parseFloat(store.som.colorManipulator+""); //the html input transforms this into a string
-        const intensity = clamp(mapVal+man, 0, 1)
+        const color: number = map[myRect.somY][myRect.somX];
 
-        s.fill(colorScale(intensity).hex())
+        s.fill(colorScale(color).hex())
         s.quad(myRect.tl.x,
             myRect.tl.y,
             myRect.tr.x,
@@ -21,5 +19,6 @@ export const drawDistanceMap = (s: p5, distance_map_positions: MyRectWithSom[], 
             myRect.br.y,
             myRect.bl.x,
             myRect.bl.y)
+
     }
 }
