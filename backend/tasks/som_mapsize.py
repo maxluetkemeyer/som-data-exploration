@@ -19,7 +19,7 @@ async def som_mapsize(websocket, lattice):
 
     # Response with map size attached
     response = {
-        "type": "som_mapsize",
+        "task": "som_mapsize",
         "map_size": map_size
     }
 
@@ -34,7 +34,7 @@ def calculate_map_size(data, lattice):
     Inspired by https://github.com/sevamoo/SOMPY/blob/cba0bcab065f91fc862c15f534f64858a7058ff4/sompy/sompy.py
     :data: matrix of n rows (instances) and m cols (features)
     :lattice: 'rectangular' or 'hexagonal'
-    :return: map size dictonary {"y": int, "x": int} 
+    :return: map size dictonary {"y": int, "x": int}
     """
     D = data.copy()
     dlen = D.shape[0]

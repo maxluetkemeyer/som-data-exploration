@@ -6,7 +6,7 @@ import websockets
 
 import storage
 from tasks.database_connect import database_connect
-from tasks.decision_tree_train import decision_tree_train
+from tasks.boundaries_train import boundaries_train
 from tasks.query_data import query_data
 from tasks.som_mapsize import som_mapsize
 from tasks.som_train import som_train
@@ -16,19 +16,19 @@ async def handler(websocket):
     async for message in websocket:
         event = json.loads(message)
 
-        task = event["type"]
+        task = event["task"]
 
         try:
             if task == "database_connect":
-                await database_connect(websocket, event["options"])
+                await database_connect(websocket, event["credentials"])
             if task == "query_data":
                 await query_data(websocket, event["query"])
             if task == "som_mapsize":
                 await som_mapsize(websocket, event["lattice"])
             if task == "som_train":
                 await som_train(websocket, event["options"])
-            if task == "decision_tree_train":
-                await decision_tree_train(websocket, event["options"])
+            if task == "boundaries_train":
+                await boundaries_train(websocket, event["selection"])
 
         except Exception as e:
             storage.printWarning(task)
@@ -40,7 +40,7 @@ async def send_message(websocket, title, body):
     storage.printTask("message")
 
     response = {
-        "type": "message",
+        "task": "message",
         "options": {
             "title": title,
             "body": body,

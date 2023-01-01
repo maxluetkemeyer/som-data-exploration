@@ -41,7 +41,7 @@ async def som_train(websocket, options):
     win_map = []
     for key in win_map_dict:
         win_map.append({
-            "coordinates": list(key), # tested: y, x
+            "coordinates": list(key),  # tested: y, x
             "indices": win_map_dict[key],
         })
 
@@ -66,7 +66,7 @@ async def som_train(websocket, options):
         topographic_error = som.topographic_error(data=array)
 
     response = {
-        "type": "som_train",
+        "task": "som_train",
         "som": {
             "distance_map": som.distance_map().tolist(),
             "win_map": win_map,

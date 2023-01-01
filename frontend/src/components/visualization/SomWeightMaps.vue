@@ -2,35 +2,41 @@
 import { store } from '@/logic/store';
 import chroma from 'chroma-js';
 import HexSom from './hexagon/HexSom.vue';
+import InfoBar from './InfoBar.vue';
 import RectSom from './rectangular/RectSom.vue';
-import VizControlls from './VizControlls.vue';
-
+import Legend from "./Legend.vue"
 
 </script>
 
 <template>
     <div id="somWeightMaps" class="somWeightMaps">
-        <VizControlls />
-
-        <div class="weightMapsContainer">
-            <div v-for="(item, index) in store.som.result.weights"
-                class="weight_map">
-                <p>{{ Object.keys(store.data[0])[index] }}</p>
-                <RectSom v-if="store.som.settings.topology === 'rectangular'"
-                    :somMap="item" :winMap="store.som.result.win_map"
-                    :showWinMap="true" :containerId="'weightMap' + index"
-                    :colorScale="colorScale" :onSelectedCb="onSelectedCb"
-                    :key="('weightMapRect' + index + keyCounter + store.som.displayInstancesPerNeuron)"
-                    class="canvasContainer" :style="sizeClass" />
-                <HexSom v-else :somMap="item" :winMap="store.som.result.win_map"
-                    :showWinMap="true" :containerId="'weightMap' + index"
-                    :colorScale="colorScale" :onSelectedCb="onSelectedCb"
-                    :key="('weightMapHex' + index + keyCounter + store.som.displayInstancesPerNeuron)"
-                    class="canvasContainer" :style="sizeClass" />
+        <div class="somWeightMapsVisualizations">
+            <div class="weightMapsContainer">
+                <div v-for="(item, index) in store.som.result.weights"
+                    class="weight_map">
+                    <p>{{ Object.keys(store.data[0])[index] }}</p>
+                    <RectSom
+                        v-if="store.som.settings.topology === 'rectangular'"
+                        :somMap="item" :winMap="store.som.result.win_map"
+                        :containerId="'weightMap' + index"
+                        :colorScale="store.som.weightMapsColorScale"
+                        :onSelectedCb="onSelectedCb"
+                        :key="('weightMapRect' + index + keyCounter + store.som.displayInstancesPerNeuron)"
+                        :style="sizeClass" />
+                    <HexSom v-else :somMap="item"
+                        :winMap="store.som.result.win_map"
+                        :containerId="'weightMap' + index"
+                        :colorScale="store.som.weightMapsColorScale"
+                        :onSelectedCb="onSelectedCb"
+                        :key="('weightMapHex' + index + keyCounter + store.som.displayInstancesPerNeuron)"
+                        :style="sizeClass" />
+                </div>
             </div>
+
+            <Legend :minMaxColorScale="minMaxColorScale" vizType="weightMaps" />
         </div>
 
-
+        <InfoBar />
 
     </div>
 </template>
@@ -40,7 +46,7 @@ export default {
     data() {
         return {
             keyCounter: 0,
-            colorScale: chroma.scale(["red", "blue"]).mode("lab")
+            minMaxColorScale: chroma.scale(["red", "blue"]).mode("lab")
         };
     },
     computed: {
@@ -69,7 +75,8 @@ export default {
     },
     mounted() {
         document.getElementById("somWeightMaps")?.addEventListener("contextmenu", (e) => e.preventDefault());
-    }
+    },
+    components: { InfoBar }
 }
 </script>
 
@@ -77,28 +84,33 @@ export default {
 .somWeightMaps {
     height: 100%;
     width: 100%;
-    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
 }
+
+.somWeightMapsVisualizations {
+    width: 100%;
+    height: 95%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    column-gap: 1rem;
+}
+
 
 .weightMapsContainer {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
     justify-content: space-around;
+    overflow-y: auto;
 }
 
 .weight_map {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-.canvasContainer {
-    /*width: 20rem;
-    height: 20rem;*/
-    display: flex;
-    justify-content: center;
-    border: 1px solid black;
-    /* align-items: center; */
 }
 </style>

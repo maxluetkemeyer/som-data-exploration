@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { format } from 'sql-formatter';
 import { store } from '@/logic/store';
-import { decision_tree_train_send } from '@/logic/tasks/decision_tree_train';
+import { boundaries_train_send } from '@/logic/tasks/boundaries_train';
 import { createMessage } from '@/logic/tasks/message';
 </script>
 
@@ -11,7 +11,7 @@ import { createMessage } from '@/logic/tasks/message';
             class="form-control">{{ format(store.boundaries, { language: "sql" }) }}</textarea>
 
         <div class="boundariesOutputMenu">
-            <button @click="decision_tree_train_send();"
+            <button @click="boundaries_train_send();"
                 class="btn btn-primary">Calculate boundaries</button>
 
             <button @click="copyToClipboard()" class="btn btn-primary">Copy to

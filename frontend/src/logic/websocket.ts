@@ -1,5 +1,5 @@
 import { database_connect } from "./tasks/database_connect";
-import { decision_tree_train } from "./tasks/decision_tree_train";
+import { boundaries_train } from "./tasks/boundaries_train";
 import { createMessage, message } from "./tasks/message";
 import { query_data } from "./tasks/query_data";
 import { som_mapsize } from "./tasks/som_mapsize";
@@ -28,7 +28,7 @@ export const createConnection = () => {
 
     connection.onmessage = (event) => {
         const json = JSON.parse(event.data)
-        const task = json["type"]
+        const task = json["task"]
 
         switch (task){
             case "database_connect":
@@ -40,8 +40,8 @@ export const createConnection = () => {
             case "som_train":
                 som_train(json["som"])
                 return;
-            case "decision_tree_train":
-                decision_tree_train(json["output"])
+            case "boundaries_train":
+                boundaries_train(json["output"])
                 return;
             case "som_mapsize":
                 som_mapsize(json["map_size"])

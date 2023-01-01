@@ -1,5 +1,3 @@
-// store.js
-import type { MyPoint } from '@/components/visualization/models';
 import chroma from 'chroma-js';
 import { reactive } from 'vue'
 import { Message, ShowState } from './models'
@@ -43,6 +41,7 @@ export const store = reactive({
     },
     selection: [],
     umatrixColorScale: chroma.scale(["#ffffff", "black"]).mode("lab"),
+    weightMapsColorScale: chroma.scale(["#ffffff", "black"]).mode("lab"),
     displayInstancesPerNeuron: 100,
   },
   messages: msgArray,

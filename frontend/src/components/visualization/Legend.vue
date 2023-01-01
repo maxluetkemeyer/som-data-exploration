@@ -20,14 +20,14 @@ import chroma from "chroma-js";
 
 <script lang="ts">
 export default {
-    props: ["minMaxColorScale"],
+    props: ["minMaxColorScale", "vizType"],
     data() {
         return {
             range: [0, 0.5],
         }
     },
     created() {
-        this.updateUmatrixColorScale();
+        this.updateColorScale();
     },
     computed: {
         grad() {
@@ -41,15 +41,22 @@ export default {
     },
     watch: {
         range(oldRange, newRange) {
-            this.updateUmatrixColorScale();
+            this.updateColorScale();
         }
     },
     methods: {
-        updateUmatrixColorScale(){
+        updateColorScale() {
             const color0 = this.minMaxColorScale(this.range[0]).hex();
             const color1 = this.minMaxColorScale(this.range[1]).hex();
 
-            store.som.umatrixColorScale = chroma.scale([color0, color1]).mode("lab")
+            if(this.vizType === "umatrix"){
+                store.som.umatrixColorScale = chroma.scale([color0, color1]).mode("lab")
+            }
+            if(this.vizType === "weightMaps"){
+                store.som.weightMapsColorScale = chroma.scale([color0, color1]).mode("lab")
+            }
+
+            
         }
     }
 }

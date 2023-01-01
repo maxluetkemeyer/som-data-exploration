@@ -15,7 +15,7 @@ import { calcWinMapPositions } from './positions_win_map';
 
 <script lang="ts">
 export default {
-    props: ["somMap", "winMap", "showWinMap", "containerId", "colorScale", "onSelectedCb"],
+    props: ["somMap", "winMap", "containerId", "colorScale", "onSelectedCb"],
     data() {
         return {
             somSize: {
@@ -62,7 +62,7 @@ export default {
 
             s.draw = () => {
                 drawDistanceMap(s, distance_map_positions, r, this.somMap, this.colorScale);
-                if(this.showWinMap) drawWinMap(s, win_map_positions, circle_size);
+                drawWinMap(s, win_map_positions, circle_size);
                 hexSel.draw();
             }
         }

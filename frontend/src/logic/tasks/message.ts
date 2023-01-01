@@ -10,12 +10,16 @@ export const message = (options: {title: string, body: string}) => {
     switch (options.title) {
         case "query_data":
             states.data = ShowState.Settings
+            break
         case "som_train":
             states.visualization = ShowState.Settings
-        case "decision_tree_train":
-            states.boundaries = ShowState.Settings
+            break
+        case "boundaries_train":
+            states.boundaries = ShowState.Output
+            break
         case "som_mapsize":
             states.visualization = ShowState.Settings
+            break
     }
 }
 

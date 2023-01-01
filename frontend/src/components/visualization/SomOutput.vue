@@ -5,6 +5,7 @@ import HexSom from './hexagon/HexSom.vue';
 import RectSom from './rectangular/RectSom.vue';
 import VizControlls from './VizControlls.vue';
 import Legend from "./Legend.vue"
+import InfoBar from './InfoBar.vue';
 </script>
 
 <template>
@@ -12,36 +13,21 @@ import Legend from "./Legend.vue"
         <div class="somOutputVisualization">
             <RectSom v-if="store.som.settings.topology === 'rectangular'"
                 :somMap="store.som.result.distance_map"
-                :winMap="store.som.result.win_map" :showWinMap="true"
+                :winMap="store.som.result.win_map"
                 :colorScale="store.som.umatrixColorScale"
                 containerId="canvasContainer"
                 :key="'rect' + store.som.displayInstancesPerNeuron" />
             <HexSom v-else :somMap="store.som.result.distance_map"
-                :winMap="store.som.result.win_map" :showWinMap="true"
+                :winMap="store.som.result.win_map"
                 :colorScale="store.som.umatrixColorScale"
                 containerId="canvasContainer"
                 :key="'hex' + store.som.displayInstancesPerNeuron" />
 
-            <Legend :minMaxColorScale="minMaxColorScale" />
+            <Legend :minMaxColorScale="minMaxColorScale" vizType="umatrix"/>
         </div>
 
 
-        <div class="input-group">
-            <span class="input-group-text">Quantization Error</span>
-            <span class="input-group-text">{{
-                    store.som.result.quantization_error.toFixed(8)
-            }}</span>
-            <span class="input-group-text">Topographic Error</span>
-            <span class="input-group-text">{{
-                    store.som.result.topographic_error.toFixed(8)
-            }}</span>
-            <span class="input-group-text sliderInline">
-                <input v-model="store.som.displayInstancesPerNeuron"
-                    type="range" class="form-range" min="0" max="100" step="1">
-            </span>
-            <span class="input-group-text">{{ store.som.displayInstancesPerNeuron }} Pts./Neuron</span>
-            
-        </div>
+        <InfoBar />
     </div>
 </template>
 
@@ -56,7 +42,7 @@ export default {
     mounted() {
         document.getElementById("somOutput")?.addEventListener("contextmenu", (e) => e.preventDefault());
     },
-    components: { VizControlls }
+    components: { VizControlls, InfoBar }
 }
 </script>
 
@@ -76,11 +62,5 @@ export default {
     height: 100%;
     display: flex;
     flex-direction: row;
-}
-
-.sliderInline {
-    flex-grow: 1;
-    padding: 0 10px;
-    transform: translateY(0);
 }
 </style>

@@ -22,12 +22,12 @@ async def query_data(websocket, query):
     # Transform DataFrame into a Dictonary
     # https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_dict.html
     # [{'col1': 1, 'col2': 0.5}, {'col1': 2, 'col2': 0.75}]
-    dataDict = df.head(100).to_dict("records")
+    dataDict = df.head(300).to_dict("records")
     # dataDict = df.to_dict("records")
 
     # Response with data Dictornary attached
     response = {
-        "type": "query_data",
+        "task": "query_data",
         "data": dataDict
     }
 

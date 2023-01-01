@@ -13,7 +13,7 @@ export const som_mapsize_send = () => {
     states.visualization = ShowState.Loading;
 
     const msg = {
-        type:"som_mapsize",
+        task:"som_mapsize",
         lattice: store.som.settings.topology,
     }
 

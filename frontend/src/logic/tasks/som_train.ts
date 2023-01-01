@@ -13,7 +13,7 @@ export const som_train_send = () => {
     store.som.selection = []
 
     const msg = {
-        type: "som_train",
+        task: "som_train",
         options: store.som.settings,
     }
 

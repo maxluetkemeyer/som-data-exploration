@@ -3,12 +3,12 @@ import pandas as pd
 import storage
 
 
-async def database_connect(websocket, options):
+async def database_connect(websocket, credentials):
     # Print colored Task name
     storage.printTask("database_connect")
 
     # Store connection in global storage
-    storage.db = options
+    storage.db = credentials
 
     # Establish new connection
     conn = storage.getEngine().connect()
@@ -24,7 +24,7 @@ async def database_connect(websocket, options):
 
     # Response with tables attached
     response = {
-        "type": "database_connect",
+        "task": "database_connect",
         "tables": tables
     }
 

@@ -11,7 +11,7 @@ export const query_data_send = () => {
     states.data = ShowState.Loading
 
     const msg = {
-        type: "query_data",
+        task: "query_data",
         query: store.query,
     }
 

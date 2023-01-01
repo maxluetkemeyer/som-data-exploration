@@ -8,8 +8,8 @@ export const database_connect = (tables: []) => {
 
 export const database_connect_send = () => {
     const msg = {
-        type: "database_connect",
-        options: store.database
+        task: "database_connect",
+        credentials: store.database
     }
 
     connection.send(JSON.stringify(msg))

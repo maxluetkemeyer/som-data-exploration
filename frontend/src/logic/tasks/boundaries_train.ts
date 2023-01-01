@@ -2,20 +2,22 @@ import { ShowState } from "../models"
 import { states, store } from "../store"
 import { connection } from "../websocket"
 
-export const decision_tree_train = (output: any) => {
+export const boundaries_train = (output: any) => {
     store.boundaries = output
     states.boundaries = ShowState.Output
+
+    console.log(store.boundaries)
 }
 
-export const decision_tree_train_send = async () => {
+export const boundaries_train_send = async () => {
     states.boundaries = ShowState.Loading;
 
     const msg = {
-        type:"decision_tree_train",
-        options: {
-            selection: store.som.selection
-        }
+        task: "boundaries_train",
+        selection: store.som.selection
     }
 
     connection.send(JSON.stringify(msg))
+
+    console.log(store.som.selection)
 }

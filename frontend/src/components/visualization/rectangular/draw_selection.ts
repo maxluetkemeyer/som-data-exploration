@@ -8,7 +8,7 @@ export class RectSelection {
     private mapPositions: MyRectWithSom[];
     private canvasSize: { width: number, height: number }
     private selections: MyRect[] = [];
-    private mouseStartPoint: MyPoint = new MyPoint(0, 0)
+    private mouseStartPoint: MyPoint = new MyPoint(-100, -100)
     private onSelectedCb: Function;
 
     constructor(s: p5, mapPositions: MyRectWithSom[], canvasSize: any, onSelectedCb: Function) {

@@ -10,10 +10,9 @@ PORT_WS = PORT + 1
 
 async def non_blocking():
     """https://stackoverflow.com/questions/41063331/how-to-use-asyncio-with-existing-blocking-library/53719009#53719009
-    Run three of the blocking tasks concurrently. asyncio.wait will
-    automatically wrap these in Tasks. If you want explicit access
-    to the tasks themselves, use asyncio.ensure_future, or add a
-    "done, pending = asyncio.wait..." assignment
+
+    Run blocking tasks concurrently. asyncio.wait will
+    automatically wrap these in Tasks.
     """
     executor = concurrent.futures.ThreadPoolExecutor(max_workers=5)
     loop = asyncio.get_running_loop()
@@ -27,6 +26,7 @@ async def non_blocking():
 
 async def main():
     await asyncio.gather(websocket(PORT_WS), non_blocking())
+    # await asyncio.gather(websocket(PORT_WS))
 
 
 asyncio.run(main())
