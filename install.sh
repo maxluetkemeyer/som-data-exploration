@@ -1,4 +1,6 @@
 #!/bin/bash
+export VITE_WEBSOCKET_PORT=8001
+
 npm i --prefix ./frontend/
 (cd ./frontend/ && npm run build && cd -)
 

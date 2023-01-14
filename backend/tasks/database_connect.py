@@ -4,7 +4,7 @@ import storage
 
 
 async def database_connect(websocket, credentials):
-    # Print colored Task name
+    # Print colored t#ask name
     storage.printTask("database_connect")
 
     # Store connection in global storage

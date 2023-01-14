@@ -3,9 +3,7 @@ import asyncio
 
 from websocket import websocket
 from webserver import webserver
-
-PORT = 8000
-PORT_WS = PORT + 1
+from env import WEBSERVER_PORT, WEBSOCKET_PORT
 
 
 async def non_blocking():
@@ -18,14 +16,14 @@ async def non_blocking():
     loop = asyncio.get_running_loop()
     await asyncio.wait(
         fs={
-            loop.run_in_executor(executor, webserver, PORT),
+            loop.run_in_executor(executor, webserver, WEBSERVER_PORT),
         },
         return_when=asyncio.ALL_COMPLETED
     )
 
 
 async def main():
-    await asyncio.gather(websocket(PORT_WS), non_blocking())
+    await asyncio.gather(websocket(WEBSOCKET_PORT), non_blocking())
     # await asyncio.gather(websocket(PORT_WS))
 
 

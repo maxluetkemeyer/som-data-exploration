@@ -14,7 +14,7 @@ som = {}
 # https://docs.sqlalchemy.org/en/20/core/engines.html
 # dialect+driver://username:password@host:port/database
 def getEngine():
-    return sqlalchemy.create_engine(f"{db['variant']}://{db['user']}:{db['pass']}@{db['host']}:{db['port']}/{db['schema']}") # ?charset=utf8mb4
+    return sqlalchemy.create_engine(f"{db['variant']}://{db['user']}:{db['pass']}@{db['host']}:{db['port']}/{db['schema']}")  # ?charset=utf8mb4
 
 
 # https://stackoverflow.com/questions/287871/how-do-i-print-colored-text-to-the-terminal

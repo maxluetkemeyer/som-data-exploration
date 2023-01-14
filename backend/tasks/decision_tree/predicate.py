@@ -1,5 +1,3 @@
-# https://github.com/denmartins/enablingnontechsdb/blob/master/qbe/treeqbe.py
-
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -9,19 +7,14 @@ from sklearn.utils import check_random_state
 
 
 class DecisionTreeQBE(object):
+    """ Inspired by
+        https://github.com/denmartins/enablingnontechsdb/blob/master/qbe/treeqbe.py
+        Some parts has changed
+    """
     def __init__(self, dataframe, desired_indexes):
-        #total_indexes = [t for t in range(dataframe.shape[0])]
-
-        #print(total_indexes)
-
+        # Copy data and assign target class
         all_data = dataframe.copy(True)
-        #all_data['class'] = [int(x in desired_indexes) for x in total_indexes]
-
-        #print(all_data["class"])
-        # Self
         all_data["class"] = desired_indexes
-        pd.set_option('display.max_rows', None)
-        # print(all_data["class"])
 
         # Shuffle data
         rng = check_random_state(0)
@@ -99,5 +92,5 @@ class DecisionTreeQBE(object):
 
     def saveTreePlot(self, path):
         plt.figure()
-        tree.plot_tree(self.model, filled=True)
-        plt.savefig(path, format='svg') # bbox_inches = "tight"
+        tree.plot_tree(self.model, filled=True, proportion=True, feature_names=list(self.columns.values), class_names=["Other", "Target"])
+        plt.savefig(path, format='svg')

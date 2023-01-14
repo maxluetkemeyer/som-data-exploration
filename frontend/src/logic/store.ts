@@ -3,6 +3,8 @@ import { reactive } from 'vue'
 import { Message, ShowState } from './models'
 
 const msgArray: Message[] = [];
+const WEBSOCKET_PORT = import.meta.env.VITE_WEBSOCKET_PORT ?? 8001
+console.log(WEBSOCKET_PORT)
 
 export const store = reactive({
   connected: false,

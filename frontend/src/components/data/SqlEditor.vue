@@ -27,7 +27,6 @@ export default {
       extensions: [sql()],
     };
   },
-  mounted() { },
 };
 </script>
 
