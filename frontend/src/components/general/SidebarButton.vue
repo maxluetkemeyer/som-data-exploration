@@ -27,6 +27,7 @@ export default {
     color: #393E46;
     border-radius: 40% 0 0 40%;
     cursor: pointer;
+    transition: 300ms;
 }
 
 .sidebarButton:hover {

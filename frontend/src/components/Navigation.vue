@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { createMessage } from "@/logic/tasks/message";
 import { store } from "../logic/store"
 </script>
 
@@ -9,50 +10,112 @@ import { store } from "../logic/store"
       with self-organizing maps
     </div>
     <div class="tables">
-      <div v-for="table in store.tables" class="tableItem">{{ table }}</div>
+      <div class="tableScrollContainer">
+        <div v-for="table in store.tables" class="tableItem"
+          @click="copyToClipboard(table)">{{ table }}</div>
+
+      </div>
     </div>
     <div class="currentConnection" @click="store.connected = false">
-      {{ store.database.user }}@{{ store.database.host }}:{{store.database.port}} <br />
+      {{ store.database.user }}@{{
+        store.database.host
+      }}:{{ store.database.port }} <br />
       {{ store.database.schema }}
     </div>
   </div>
 </template>
 
+<script lang="ts">
+export default {
+  methods: {
+    copyToClipboard(content: string) {
+      // https://www.w3schools.com/howto/howto_js_copy_clipboard.asp
+
+      // Copy the text inside the text field
+      navigator.clipboard.writeText(content);
+
+      if (window.getSelection) {
+        if (window.getSelection()?.empty) {  // Chrome
+          window.getSelection()?.empty();
+        } else if (window.getSelection()?.removeAllRanges) {  // Firefox
+          window.getSelection()?.removeAllRanges();
+        }
+      }
+
+      createMessage(content, "Copied to Clipboard")
+    }
+  }
+}
+</script>
+
 <style scoped>
 .nav {
-  width: 100%;
-  max-width: 100%;
+  position: relative;
   height: 100%;
-  display: flex;
 }
 
 .logo {
+  position: absolute;
+  height: 100%;
+  width: 15vw;
+  border-right: 1vh solid #497174;
+  background-color: white;
+  overflow: hidden;
+
   display: flex;
   align-items: center;
-  padding: 0 1rem 0 1rem;
-  border-right: 1px solid black;
-}
-
-.tables {
-  flex-grow: 1;
-  display: flex;
-  border-right: 1px solid black;
-  overflow-x: auto;
+  justify-content: center;
 }
 
 .currentConnection {
+  position: absolute;
+  right: 0;
+  height: 100%;
+  width: 22vw;
+  border-left: 1vh solid #497174;
+  background-color: white;
+  cursor: pointer;
+  overflow: hidden;
+
   display: flex;
   align-items: center;
-  padding: 0 1rem 0 1rem;
-  cursor: pointer;
+  justify-content: center;
+  text-align: center;
+}
+
+.tables {
+  position: absolute;
+  left: 15vw;
+  height: 100%;
+  width: 63vw;
+}
+
+.tableScrollContainer {
+  height: 100%;
+
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
 }
 
 .tableItem {
-  display: flex;
-  align-items: center;
   height: 100%;
-  padding: 0.5rem;
+  position: relative;
   border-right: 1px solid black;
-  background-color: #EFF5F5;
+  width: fit-content;
+  white-space: nowrap;
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.tableItem:hover {
+  background-color: var(--primary);
+  color: white;
+  transition: 300ms;
 }
 </style>

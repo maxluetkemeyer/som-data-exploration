@@ -1,4 +1,14 @@
 # The Tool
+This thesis aims at enabling data scientists or researchers to quickly use Self-Organizing
+Maps in their data exploration processes. Therefore, a program was developed to
+create interactive visualizations using such maps. A user can select regions of in-
+terest to get a new, specific subset. In addition, relationships between different
+features can be revealed to prepare datasets for various data or machine learning
+projects. A client-server architecture was chosen to create powerful visualizations
+with JavaScript and to handle data manipulation tasks with Python. Different re-
+lational databases can be used as input. The theoretical basis is mainly oriented
+on the work of Kohonen, and the machine learning models are based on
+Haykin.
 
 # Installation And User Manual
 ## Script Installation
@@ -76,7 +86,7 @@ python3 -m pip install -r requirements.txt
 ```
 
 To finally use the server, run the app.py file. The ports have to be unused in the
-system at that time.
+system at that time. The webserver is now not the one from the backend, but the one shown in the terminal of the client!
 
 ```Bash
 python app.py
