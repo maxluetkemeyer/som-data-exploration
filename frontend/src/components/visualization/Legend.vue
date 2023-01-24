@@ -11,7 +11,7 @@ import chroma from "chroma-js";
             <p>1.0</p>
             <Slider v-model="range" :tooltips="false" orientation="vertical"
                 :min="0" :max="1" :step="-1" direction="rtl"
-                class="colorLegendSlider" />
+                class="colorLegendSlider" @change="updateColorScale"/>
             <p>0.0</p>
         </div>
     </div>
@@ -23,11 +23,12 @@ export default {
     props: ["minMaxColorScale", "vizType"],
     data() {
         return {
+            //TODO: Bug, browser emitts a ReferenceError. The plugin may cause this issue.
             range: [0, 0.5],
         }
     },
     created() {
-        this.updateColorScale();
+        this.updateColorScale(this.range);
     },
     computed: {
         grad() {
@@ -39,24 +40,20 @@ export default {
             }
         }
     },
-    watch: {
-        range(oldRange, newRange) {
-            this.updateColorScale();
-        }
-    },
     methods: {
-        updateColorScale() {
-            const color0 = this.minMaxColorScale(this.range[0]).hex();
-            const color1 = this.minMaxColorScale(this.range[1]).hex();
+        updateColorScale(range: any) {
+            console.log(range)
+            const color0 = this.minMaxColorScale(range[0]).hex();
+            const color1 = this.minMaxColorScale(range[1]).hex();
 
-            if(this.vizType === "umatrix"){
+            if (this.vizType === "umatrix") {
                 store.som.umatrixColorScale = chroma.scale([color0, color1]).mode("lab")
             }
-            if(this.vizType === "weightMaps"){
+            if (this.vizType === "weightMaps") {
                 store.som.weightMapsColorScale = chroma.scale([color0, color1]).mode("lab")
             }
 
-            
+
         }
     }
 }

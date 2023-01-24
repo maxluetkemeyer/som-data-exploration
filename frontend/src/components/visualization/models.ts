@@ -1,4 +1,4 @@
-export class MyPoint {
+export class Point {
     x: number;
     y: number;
 
@@ -6,16 +6,9 @@ export class MyPoint {
         this.x = x
         this.y = y
     }
-
-    toObject(){
-        return {
-            x: this.x,
-            y: this.y
-        }
-    }
 }
 
-export class MyCircle extends MyPoint{
+export class Circle extends Point{
     r: number;
 
     constructor(x: number, y: number, r:number){
@@ -24,24 +17,24 @@ export class MyCircle extends MyPoint{
     }
 }
 
-export class MyRect {
-    tl: MyPoint;
-    br: MyPoint;
-    tr: MyPoint;
-    bl: MyPoint;
+export class Rectangle {
+    tl: Point;
+    br: Point;
+    tr: Point;
+    bl: Point;
     width: number;
     height: number;
 
-    constructor(tl: MyPoint, br: MyPoint){
+    constructor(tl: Point, br: Point){
         this.tl = tl;
         this.br = br;
-        this.tr = new MyPoint(this.br.x, this.tl.y);
-        this.bl = new MyPoint(this.tl.x, this.br.y);
+        this.tr = new Point(this.br.x, this.tl.y);
+        this.bl = new Point(this.tl.x, this.br.y);
         this.width = this.br.x - this.tl.x;
         this.height = this.br.y - this.tl.y;
     }
 
-    overlap(rect: MyRect): boolean{
+    overlap(rect: Rectangle): boolean{
         const B = rect;
         // Cond1. If A's left edge is to the right of the B's right edge, - then A is Totally to right Of B
         if(this.tl.x > B.tr.x) return false;
@@ -55,7 +48,7 @@ export class MyRect {
         return true;
     }
 
-    isPointInside(point: MyPoint): boolean {
+    isPointInside(point: Point): boolean {
         if(this.tl.x > point.x) return false;
         if(this.br.x < point.x) return false;
         if(this.tl.y > point.y) return false;
@@ -65,31 +58,33 @@ export class MyRect {
     }
 }
 
-export class MyRectWithSom extends MyRect{
+export class RectWithSom{
     somX: number;
     somY: number;
+    rect: Rectangle;
 
-    constructor(tl: MyPoint, br: MyPoint, somX: number, somY: number){
-        super(tl, br);
+    constructor(rect: Rectangle, somX: number, somY: number){
+        this.rect = rect;
         this.somX = somX;
         this.somY = somY;
     }
 }
 
-export class MyHexagon {
-    center: MyPoint;
+export class Hexagon {
+    center: Point;
 
-    constructor(center: MyPoint){
+    constructor(center: Point){
         this.center = center;
     }
 }
 
-export class MyHexagonWithSom extends MyHexagon{
+export class HexWithSom {
     somX: number;
     somY: number;
+    hex: Hexagon;
 
-    constructor(center: MyPoint, somX: number, somY: number){
-        super(center);
+    constructor(hex: Hexagon, somX: number, somY: number){
+        this.hex = hex;
         this.somX = somX;
         this.somY = somY;
     }

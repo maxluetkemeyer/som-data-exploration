@@ -52,8 +52,9 @@ export default {
     computed: {
         sizeClass() {
             const multiplier = 22;
-            const x = store.som.settings.neurons.x;
-            const y = store.som.settings.neurons.y;
+            //TODO: Switches coordinates
+            const x = store.som.settings.neurons.y;
+            const y = store.som.settings.neurons.x;
             if (x > y) {
                 return {
                     "width": multiplier + "rem",

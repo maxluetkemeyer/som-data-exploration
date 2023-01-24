@@ -38,7 +38,7 @@ export default {
         this.sketch.remove()
     },
     mounted() {
-        this.sketch.remove() //remove placeholder p5
+        this.sketch.remove() //remove placeholder p5 (TypeScript)
 
         const qsw = this.canvasSize.width / this.somSize.width;
         const qsh = this.canvasSize.height / this.somSize.height;

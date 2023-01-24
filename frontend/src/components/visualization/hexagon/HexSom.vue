@@ -38,7 +38,7 @@ export default {
         this.sketch.remove()
     },
     mounted() {
-        this.sketch.remove() //remove placeholder p5
+        this.sketch.remove() //remove placeholder p5 (TypeScript)
 
         const a = 2 * Math.PI / 6;
         const r_width = this.canvasSize.width / (1 + this.somSize.width + this.somSize.width * Math.cos(a) - Math.cos(a))

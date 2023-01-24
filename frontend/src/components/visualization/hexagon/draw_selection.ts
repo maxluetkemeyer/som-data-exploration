@@ -1,5 +1,5 @@
 import type p5 from "p5"
-import { MyPoint, MyHexagonWithSom, DrawState, MyRect } from "../models";
+import { Point, HexWithSom, DrawState, Rectangle } from "../models";
 import { store } from "@/logic/store";
 import { drawHexagon } from "./draw_distance_map";
 
@@ -7,13 +7,13 @@ export class HexSelection {
     private state = DrawState.Start;
     private s: p5;
     private r: number;
-    private mapPositions: MyHexagonWithSom[];
+    private mapPositions: HexWithSom[];
     private canvasSize: { width: number, height: number }
-    private selections: MyRect[] = [];
-    private mouseStartPoint: MyPoint = new MyPoint(0, 0)
+    private selections: Rectangle[] = [];
+    private mouseStartPoint: Point = new Point(0, 0)
     private onSelectedCb: Function;
 
-    constructor(s: p5, mapPositions: MyHexagonWithSom[], canvasSize: any, r: number, onSelectedCb: Function) {
+    constructor(s: p5, mapPositions: HexWithSom[], canvasSize: any, r: number, onSelectedCb: Function) {
         this.s = s;
         this.r = r;
         this.mapPositions = mapPositions;
@@ -24,9 +24,9 @@ export class HexSelection {
             store.som.selection.find((sel: any) => {
                 if (sel.x == mapPosition.somX && sel.y == mapPosition.somY) {
                     this.selections.push(
-                        new MyRect(
-                            mapPosition.center,
-                            mapPosition.center
+                        new Rectangle(
+                            mapPosition.hex.center,
+                            mapPosition.hex.center
                         )
                     )
                     return true;
@@ -46,7 +46,7 @@ export class HexSelection {
 
     draw() {
         const s = this.s;
-        const mousePoint = new MyPoint(s.mouseX, s.mouseY)
+        const mousePoint = new Point(s.mouseX, s.mouseY)
 
         switch (this.state) {
             case DrawState.Start:
@@ -64,7 +64,7 @@ export class HexSelection {
                     return;
                 }
 
-                const mouseRect = new MyRect(
+                const mouseRect = new Rectangle(
                     mousePoint,
                     mousePoint
                 );
@@ -90,27 +90,27 @@ export class HexSelection {
                     break;
                 }
 
-                let selectionRect: MyRect;
+                let selectionRect: Rectangle;
                 if (mousePoint.x < this.mouseStartPoint.x) {
                     if (mousePoint.y < this.mouseStartPoint.y) {
-                        selectionRect = new MyRect(
+                        selectionRect = new Rectangle(
                             mousePoint,
                             this.mouseStartPoint,
                         );
                     } else {
-                        selectionRect = new MyRect(
-                            new MyPoint(mousePoint.x, this.mouseStartPoint.y),
-                            new MyPoint(this.mouseStartPoint.x, mousePoint.y),
+                        selectionRect = new Rectangle(
+                            new Point(mousePoint.x, this.mouseStartPoint.y),
+                            new Point(this.mouseStartPoint.x, mousePoint.y),
                         );
                     }
                 } else {
                     if (mousePoint.y < this.mouseStartPoint.y) {
-                        selectionRect = new MyRect(
-                            new MyPoint(this.mouseStartPoint.x, mousePoint.y),
-                            new MyPoint(mousePoint.x, this.mouseStartPoint.y)
+                        selectionRect = new Rectangle(
+                            new Point(this.mouseStartPoint.x, mousePoint.y),
+                            new Point(mousePoint.x, this.mouseStartPoint.y)
                         )
                     } else {
-                        selectionRect = new MyRect(
+                        selectionRect = new Rectangle(
                             this.mouseStartPoint,
                             mousePoint,
                         );
@@ -126,13 +126,13 @@ export class HexSelection {
                 this.paint();
 
                 const neurons: any = [];
-                for (const myHex of this.mapPositions) {
+                for (const somHex of this.mapPositions) {
                     for (const selRect of this.selections) {
-                        if (!selRect.isPointInside(myHex.center)) continue;
+                        if (!selRect.isPointInside(somHex.hex.center)) continue;
 
                         let skip = false;
                         for (const neuron of neurons) {
-                            if (neuron.x === myHex.somX && neuron.y === myHex.somY) {
+                            if (neuron.x === somHex.somX && neuron.y === somHex.somY) {
                                 skip = true;
                                 break;
                             }
@@ -140,8 +140,8 @@ export class HexSelection {
                         if (skip) continue;
 
                         neurons.push({
-                            x: myHex.somX,
-                            y: myHex.somY,
+                            x: somHex.somX,
+                            y: somHex.somY,
                         })
                     }
                 }
@@ -158,13 +158,13 @@ export class HexSelection {
     }
 
     private paint() {
-        for (const myHex of this.mapPositions) {
+        for (const somHex of this.mapPositions) {
             for (const selRect of this.selections) {
-                if (!selRect.isPointInside(myHex.center)) continue;
+                if (!selRect.isPointInside(somHex.hex.center)) continue;
 
                 this.s.fill(253, 173, 92, 100)
                 this.s.stroke(255, 255, 255, 100)
-                drawHexagon(this.s, myHex.center, this.r)
+                drawHexagon(this.s, somHex.hex.center, this.r)
             }
         }
     }

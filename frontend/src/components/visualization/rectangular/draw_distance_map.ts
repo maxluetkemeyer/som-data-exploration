@@ -1,24 +1,24 @@
 import type p5 from "p5"
-import type { MyRectWithSom } from "../models";
+import type { RectWithSom } from "../models";
 import type chroma from "chroma-js";
-import { store } from "@/logic/store";
 
 const clamp = (num: number, min: number, max: number) => Math.min(Math.max(num, min), max);
 
-export const drawDistanceMap = (s: p5, distance_map_positions: MyRectWithSom[], map: any, colorScale: chroma.Scale) => {
+export const drawDistanceMap = (s: p5, distance_map_positions: RectWithSom[], map: any, colorScale: chroma.Scale) => {
     s.noStroke()
-    for (const myRect of distance_map_positions) {
-        const color: number = map[myRect.somY][myRect.somX];
+    for (const somRect of distance_map_positions) {
+        const rect = somRect.rect;
+        const color: number = map[somRect.somY][somRect.somX];
 
         s.fill(colorScale(color).hex())
-        s.quad(myRect.tl.x,
-            myRect.tl.y,
-            myRect.tr.x,
-            myRect.tr.y,
-            myRect.br.x,
-            myRect.br.y,
-            myRect.bl.x,
-            myRect.bl.y)
+        s.quad(rect.tl.x,
+            rect.tl.y,
+            rect.tr.x,
+            rect.tr.y,
+            rect.br.x,
+            rect.br.y,
+            rect.bl.x,
+            rect.bl.y)
 
     }
 }

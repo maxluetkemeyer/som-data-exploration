@@ -1,23 +1,21 @@
 import type p5 from "p5"
-import type { MyHexagonWithSom, MyPoint } from "../models";
+import type { HexWithSom, Point } from "../models";
 import type chroma from "chroma-js";
-import { store } from "@/logic/store";
 
 const a = 2 * Math.PI / 6;
-const clamp = (num: number, min: number, max: number) => Math.min(Math.max(num, min), max);
 
-export const drawDistanceMap = (s: p5, distance_map_positions: MyHexagonWithSom[], r:number, map: any, colorScale: chroma.Scale) => {
+export const drawDistanceMap = (s: p5, distance_map_positions: HexWithSom[], r:number, map: any, colorScale: chroma.Scale) => {
     s.noStroke()
 
-    for(const myHex of distance_map_positions){
-        const color: number = map[myHex.somY][myHex.somX];
+    for(const somHex of distance_map_positions){
+        const color: number = map[somHex.somY][somHex.somX];
 
         s.fill(colorScale(color).hex())
-        drawHexagon(s, myHex.center, r)
+        drawHexagon(s, somHex.hex.center, r)
     }
 }
 
-export const drawHexagon = (s: p5, center: MyPoint, r: number) => {
+export const drawHexagon = (s: p5, center: Point, r: number) => {
     const x = center.x, y = center.y;
     
     s.beginShape();

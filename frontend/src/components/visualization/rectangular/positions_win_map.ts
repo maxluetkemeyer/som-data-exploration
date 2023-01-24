@@ -1,11 +1,8 @@
 import { store } from "@/logic/store"
-import { MyCircle } from "../models"
+import { Circle } from "../models"
 
-export const calcWinMapPositions = (win_map: any, quadSize: any, circle_size: any): MyCircle[] => {
-    //TODO: Add supervised color
-    //const data = response_query.data
-    //const win_map = response_som.win_map
-    const win_map_circles: MyCircle[] = []
+export const calcWinMapPositions = (win_map: any, quadSize: any, circle_size: any): Circle[] => {
+    const win_map_circles: Circle[] = []
 
     for (const neuron of win_map) {
         // Coordinates [y, x]
@@ -25,7 +22,7 @@ export const calcWinMapPositions = (win_map: any, quadSize: any, circle_size: an
 
             const posX = xCenter + xOffset, posY = yCenter + yOffset
 
-            win_map_circles.push(new MyCircle(posX, posY, circle_size))
+            win_map_circles.push(new Circle(posX, posY, circle_size))
         }
     }
 

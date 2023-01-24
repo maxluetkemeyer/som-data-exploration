@@ -1,9 +1,9 @@
 import type p5 from "p5"
-import type { MyCircle } from "../models"
+import type { Circle } from "../models"
 
-export const drawWinMap = (s: p5, win_map_positions: MyCircle[]) => {
+export const drawWinMap = (s: p5, win_map_positions: Circle[]) => {
     for(const myCircle of win_map_positions){
         s.fill("green")
-        s.circle(myCircle.x, myCircle.y, myCircle.r) //circle(x, y, d)
+        s.circle(myCircle.x, myCircle.y, myCircle.r) //s.circle(x, y, d)
     }
 }

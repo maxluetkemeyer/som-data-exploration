@@ -1,17 +1,17 @@
 import type p5 from "p5"
-import { MyPoint, MyRect, MyRectWithSom, DrawState } from "../models";
+import { Point, Rectangle, RectWithSom, DrawState } from "../models";
 import { store } from "@/logic/store";
 
 export class RectSelection {
     private state = DrawState.Start;
     private s: p5;
-    private mapPositions: MyRectWithSom[];
+    private mapPositions: RectWithSom[];
     private canvasSize: { width: number, height: number }
-    private selections: MyRect[] = [];
-    private mouseStartPoint: MyPoint = new MyPoint(-100, -100)
+    private selections: Rectangle[] = [];
+    private mouseStartPoint: Point = new Point(-100, -100)
     private onSelectedCb: Function;
 
-    constructor(s: p5, mapPositions: MyRectWithSom[], canvasSize: any, onSelectedCb: Function) {
+    constructor(s: p5, mapPositions: RectWithSom[], canvasSize: any, onSelectedCb: Function) {
         this.s = s;
         this.mapPositions = mapPositions;
         this.canvasSize = canvasSize;
@@ -21,14 +21,14 @@ export class RectSelection {
             store.som.selection.find((sel: any) => {
                 if (sel.x == mapPosition.somX && sel.y == mapPosition.somY) {
                     this.selections.push(
-                        new MyRect(
-                            new MyPoint(
-                                mapPosition.tl.x + 1,
-                                mapPosition.tl.y + 1
+                        new Rectangle(
+                            new Point(
+                                mapPosition.rect.tl.x + 1,
+                                mapPosition.rect.tl.y + 1
                             ),
-                            new MyPoint(
-                                mapPosition.br.x - 1,
-                                mapPosition.br.y - 1,
+                            new Point(
+                                mapPosition.rect.br.x - 1,
+                                mapPosition.rect.br.y - 1,
                             )
                         )
                     )
@@ -49,7 +49,7 @@ export class RectSelection {
 
     draw() {
         const s = this.s;
-        const mousePoint = new MyPoint(s.mouseX, s.mouseY)
+        const mousePoint = new Point(s.mouseX, s.mouseY)
 
         switch (this.state) {
             case DrawState.Start:
@@ -67,7 +67,7 @@ export class RectSelection {
                     return;
                 }
 
-                const mouseRect = new MyRect(
+                const mouseRect = new Rectangle(
                     mousePoint,
                     mousePoint
                 );
@@ -93,27 +93,27 @@ export class RectSelection {
                     break;
                 }
 
-                let selectionRect: MyRect;
+                let selectionRect: Rectangle;
                 if (mousePoint.x < this.mouseStartPoint.x) {
                     if (mousePoint.y < this.mouseStartPoint.y) {
-                        selectionRect = new MyRect(
+                        selectionRect = new Rectangle(
                             mousePoint,
                             this.mouseStartPoint,
                         );
                     } else {
-                        selectionRect = new MyRect(
-                            new MyPoint(mousePoint.x, this.mouseStartPoint.y),
-                            new MyPoint(this.mouseStartPoint.x, mousePoint.y),
+                        selectionRect = new Rectangle(
+                            new Point(mousePoint.x, this.mouseStartPoint.y),
+                            new Point(this.mouseStartPoint.x, mousePoint.y),
                         );
                     }
                 } else {
                     if (mousePoint.y < this.mouseStartPoint.y) {
-                        selectionRect = new MyRect(
-                            new MyPoint(this.mouseStartPoint.x, mousePoint.y),
-                            new MyPoint(mousePoint.x, this.mouseStartPoint.y)
+                        selectionRect = new Rectangle(
+                            new Point(this.mouseStartPoint.x, mousePoint.y),
+                            new Point(mousePoint.x, this.mouseStartPoint.y)
                         )
                     } else {
-                        selectionRect = new MyRect(
+                        selectionRect = new Rectangle(
                             this.mouseStartPoint,
                             mousePoint,
                         );
@@ -129,13 +129,13 @@ export class RectSelection {
                 this.paint();
 
                 const neurons: any = [];
-                for (const myRect of this.mapPositions) {
+                for (const somRect of this.mapPositions) {
                     for (const selRect of this.selections) {
-                        if (!myRect.overlap(selRect)) continue;
+                        if (!somRect.rect.overlap(selRect)) continue;
 
                         let skip = false;
                         for (const neuron of neurons) {
-                            if (neuron.x === myRect.somX && neuron.y === myRect.somY) {
+                            if (neuron.x === somRect.somX && neuron.y === somRect.somY) {
                                 skip = true;
                                 break;
                             }
@@ -143,8 +143,8 @@ export class RectSelection {
                         if (skip) continue;
 
                         neurons.push({
-                            x: myRect.somX,
-                            y: myRect.somY,
+                            x: somRect.somX,
+                            y: somRect.somY,
                         })
                     }
                 }
@@ -161,17 +161,17 @@ export class RectSelection {
     }
 
     private paint() {
-        for (const myRect of this.mapPositions) {
+        for (const somRect of this.mapPositions) {
             for (const selRect of this.selections) {
-                if (!myRect.overlap(selRect)) continue;
+                if (!somRect.rect.overlap(selRect)) continue;
 
                 this.s.fill(253, 173, 92, 100)
                 this.s.stroke(255, 255, 255, 100)
                 this.s.rect(
-                    myRect.tl.x,
-                    myRect.tl.y,
-                    myRect.width,
-                    myRect.height,
+                    somRect.rect.tl.x,
+                    somRect.rect.tl.y,
+                    somRect.rect.width,
+                    somRect.rect.height,
                 )
             }
         }

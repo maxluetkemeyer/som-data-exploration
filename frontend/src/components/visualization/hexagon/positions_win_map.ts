@@ -1,11 +1,11 @@
 // https://eperezcosano.github.io/hex-grid/
 import { store } from "@/logic/store";
-import { MyCircle } from "../models";
+import { Circle } from "../models";
 
 const a = 2 * Math.PI / 6;
 
-export const calcWinMapPositions = (win_map: any, r: number, circle_size: number): MyCircle[] => {
-    const circs: MyCircle[] = [];
+export const calcWinMapPositions = (win_map: any, r: number, circle_size: number): Circle[] => {
+    const circs: Circle[] = [];
 
     for (const neuron of win_map) {
         const n_x = neuron.coordinates[1]
@@ -26,7 +26,7 @@ export const calcWinMapPositions = (win_map: any, r: number, circle_size: number
             const posX = xCenter + xOffset, posY = yCenter + yOffset
     
             circs.push(
-                new MyCircle(
+                new Circle(
                     posX, posY, circle_size
                 )
             );

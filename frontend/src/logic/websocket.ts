@@ -7,13 +7,12 @@ import { som_train } from "./tasks/som_train";
 
 export let connection: WebSocket;
 
-export const createConnection = () => {
+export const createWebSocketConnection = () => {
     connection = new WebSocket("ws://localhost:8001")
 
     connection.onopen = (event) => {
         console.log(event)
         console.log("Successfully connected to Websocket Server")
-        //createMessage("Websocket", "Successfully connected to Websocket Server")
     }
 
     connection.onclose = (event) => {
@@ -25,7 +24,7 @@ export const createConnection = () => {
     connection.onerror = (event) => {
         console.log(event)
     }
-
+    
     connection.onmessage = (event) => {
         const json = JSON.parse(event.data)
         const task = json["task"]

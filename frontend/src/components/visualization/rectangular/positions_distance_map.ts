@@ -1,16 +1,20 @@
-import { MyPoint, MyRectWithSom  } from "../models";
+import { Point, Rectangle, RectWithSom } from "../models";
 
-export const calcDistanceMapPositions = (somSize: any, quadSize: any): MyRectWithSom[] => {
-    const rects: MyRectWithSom[] = [];
+export const calcDistanceMapPositions = (somSize: any, quadSize: any): RectWithSom[] => {
+    const rects: RectWithSom[] = [];
 
     for (let x = 0; x < somSize.width; x++) {
         for (let y = 0; y < somSize.height; y++) {
-            rects.push(new MyRectWithSom(
-                new MyPoint(x*quadSize, y*quadSize),
-                new MyPoint((x+1)*quadSize, (y+1)*quadSize),
-                x,
-                y
-            ))
+            rects.push(
+                new RectWithSom(
+                    new Rectangle(
+                        new Point(x * quadSize, y * quadSize),
+                        new Point((x + 1) * quadSize, (y + 1) * quadSize)
+                    ),
+                    x,
+                    y
+                )
+            )
         }
     }
 

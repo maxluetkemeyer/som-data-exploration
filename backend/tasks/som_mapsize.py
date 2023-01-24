@@ -32,32 +32,37 @@ def calculate_map_size(data, lattice):
     Calculates the optimal map size given a dataset using eigenvalues and
     eigenvectors.
     Inspired by https://github.com/sevamoo/SOMPY/blob/cba0bcab065f91fc862c15f534f64858a7058ff4/sompy/sompy.py
+    Names and output logic changed
     :data: matrix of n rows (instances) and m cols (features)
     :lattice: 'rectangular' or 'hexagonal'
     :return: map size dictonary {"y": int, "x": int}
     """
     D = data.copy()
-    dlen = D.shape[0]
-    dim = D.shape[1]
-    munits = np.ceil(5 * (dlen ** 0.5))
-    A = np.ndarray(shape=[dim, dim]) + np.Inf
+    num_instances = D.shape[0]
+    num_features = D.shape[1]
+    munits = np.ceil(5 * (num_instances ** 0.5))
+    A = np.ndarray(shape=[num_features, num_features]) + np.Inf
 
-    for i in range(dim):
+    for i in range(num_features):
         D[:, i] = D[:, i] - np.mean(D[np.isfinite(D[:, i]), i])
 
-    for i in range(dim):
-        for j in range(dim):
-            c = D[:, i] * D[:, j]
-            c = c[np.isfinite(c)]
-            A[i, j] = sum(c) / len(c)
-            A[j, i] = A[i, j]
+    for i in range(num_features):
+        for j in range(num_features):
+            # Column i * Column j -> Vector
+            column = D[:, i] * D[:, j]
+            # [True, False, ...]
+            is_index_a_number = np.isfinite(column)
+            # Remove "False" indices if there are any
+            cleaned_column = column[is_index_a_number]
+            # Sum / Length resp. Mean?
+            A[i, j] = sum(cleaned_column) / len(cleaned_column)
 
-    VS = np.linalg.eig(A)
-    eigval = sorted(np.linalg.eig(A)[0])
-    if eigval[-1] == 0 or eigval[-2] * munits < eigval[-1]:
+    eigenvalues = np.linalg.eig(A)[0]
+    eigenvalues_asc = sorted(eigenvalues)
+    if eigenvalues_asc[-1] == 0 or eigenvalues_asc[-2] * munits < eigenvalues_asc[-1]:
         ratio = 1
     else:
-        ratio = np.sqrt(eigval[-1] / eigval[-2])
+        ratio = np.sqrt(eigenvalues_asc[-1] / eigenvalues_asc[-2])
 
     if lattice == "rectangular":
         size1 = min(munits, round(np.sqrt(munits / ratio)))
